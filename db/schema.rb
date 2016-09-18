@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160918181617) do
+ActiveRecord::Schema.define(version: 20160918182405) do
 
   create_table "assignments", force: :cascade do |t|
     t.integer  "origin_executor_id"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20160918181617) do
     t.datetime "new_deadline"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
+    t.integer  "todo_id"
   end
 
   create_table "comments", force: :cascade do |t|
@@ -35,6 +36,10 @@ ActiveRecord::Schema.define(version: 20160918181617) do
     t.string   "eventable_type"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.integer  "ownerable_id"
+    t.string   "ownerable_type"
+    t.index ["eventable_id", "eventable_type"], name: "index_events_on_eventable_id_and_eventable_type"
+    t.index ["ownerable_id", "ownerable_type"], name: "index_events_on_ownerable_id_and_ownerable_type"
   end
 
   create_table "projects", force: :cascade do |t|
@@ -60,6 +65,7 @@ ActiveRecord::Schema.define(version: 20160918181617) do
     t.string   "description"
     t.integer  "todoable_id"
     t.string   "todoable_type"
+    t.index ["todoable_id", "todoable_type"], name: "index_todos_on_todoable_id_and_todoable_type"
   end
 
   create_table "users", force: :cascade do |t|

@@ -17,4 +17,5 @@ end
 #  new_deadline       :datetime
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
+#  todo_id            :integer
 #

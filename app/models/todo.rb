@@ -17,3 +17,7 @@ end
 #  todoable_id   :integer
 #  todoable_type :string
 #
+# Indexes
+#
+#  index_todos_on_todoable_id_and_todoable_type  (todoable_id,todoable_type)
+#
