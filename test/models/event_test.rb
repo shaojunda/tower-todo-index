@@ -11,7 +11,6 @@ end
 # Table name: events
 #
 #  id             :integer          not null, primary key
-#  owner_id       :integer
 #  creator_id     :integer
 #  action         :string
 #  eventable_id   :integer

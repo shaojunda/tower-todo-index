@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160918182405) do
+ActiveRecord::Schema.define(version: 20160918190839) do
 
   create_table "assignments", force: :cascade do |t|
     t.integer  "origin_executor_id"
@@ -29,7 +29,6 @@ ActiveRecord::Schema.define(version: 20160918182405) do
   end
 
   create_table "events", force: :cascade do |t|
-    t.integer  "owner_id"
     t.integer  "creator_id"
     t.string   "action"
     t.integer  "eventable_id"
@@ -55,6 +54,7 @@ ActiveRecord::Schema.define(version: 20160918182405) do
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "user_id"
   end
 
   create_table "todos", force: :cascade do |t|
