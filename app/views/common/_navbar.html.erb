@@ -1,0 +1,79 @@
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle"
+              data-toggle="collapse"
+              data-target=".navbar-ex1-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <img src="/images/logo.png" />
+            <a class="navbar-brand" href="/"> 浓缩书
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav navbar-left navbar-link">
+                <li><%= link_to("书库", books_path) %></li>
+                <li><%= link_to("分类浏览", categories_path) %></li>
+              </ul>
+              <ul class="nav navbar-nav navbar-right">
+              <li>
+                <%= link_to("购买会员", plans_path ,class:"lp-action btn sm") %>
+              </li>
+              <% if current_user %>
+                <li class="nav-item btn-group" data-behavior="notifications" data-notifications='<%= render template: "notifications/index", formats: [:json] %>'>
+                  <a class="dropdown-toggle nav-link notice-ring" type="button" data-behavior="notifications-link" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <%= fa_icon "bell" %> <span data-behavior="unread-count"></span>
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenu1" data-behavior="notification-items">
+                    <!--
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                  -->
+                </div>
+              </li>
+              <% end %>
+                <% if !current_user %>
+                <li><%= link_to("注册", new_user_registration_path) %>
+                </li>
+                <li><%= link_to("登录", new_user_session_path) %></li>
+            <% else %>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        Hi!,<% if current_user.user_name? %>
+                    <%= current_user.user_name %>
+                    <% else %>
+                    <%= current_user.email %>
+                    <% end %>
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <% if current_user.admin? %>
+                          <li><%= link_to("管理员面板", admin_books_path) %></li>
+                        <% end %>
+                        <% if current_user %>
+                        <li>
+                            <%= link_to("个人中心", account_favorites_path) %>
+                        </li>
+                        <% end %>
+                        <li>
+                            <%= link_to("退出", destroy_user_session_path, method: :delete) %>
+                        </li>
+                    </ul>
+                </li>
+                <% end %>
+            </ul>
+            <div class="hidden-sm hidden-xs">
+            <%= render :partial => "books/search_bar" %>
+          </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+</nav>
