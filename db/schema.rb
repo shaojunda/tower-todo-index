@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160918175930) do
+ActiveRecord::Schema.define(version: 20160918181617) do
 
   create_table "assignments", force: :cascade do |t|
     t.integer  "origin_executor_id"
@@ -53,10 +53,13 @@ ActiveRecord::Schema.define(version: 20160918175930) do
   end
 
   create_table "todos", force: :cascade do |t|
-    t.string   "name"
+    t.string   "title"
     t.integer  "assignment_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.string   "description"
+    t.integer  "todoable_id"
+    t.string   "todoable_type"
   end
 
   create_table "users", force: :cascade do |t|
