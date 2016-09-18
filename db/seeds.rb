@@ -11,3 +11,8 @@ Team.Create([name: "Tower 测试"])
 for i in 1..3 do
   User.create([email: "user#{i}@gmail.com", password: "111111", password_confirmation: "111111", user_name: "user#{i}"])
 end
+
+puts "3 Users' accounts created."
+
+
+Team.Create([name: "Tower 测试"])

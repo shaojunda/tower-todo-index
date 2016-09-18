@@ -1,4 +1,6 @@
 class Project < ApplicationRecord
+  validates :name, presence: true
+  belongs_to :team
 end
 
 # == Schema Information
@@ -8,7 +10,8 @@ end
 #  id           :integer          not null, primary key
 #  name         :string
 #  description  :text
-#  project_type :integer
+#  project_type :integer          default(1)
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
+#  team_id      :integer
 #
