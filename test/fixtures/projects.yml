@@ -9,3 +9,15 @@ two:
   name: MyString
   description: MyText
   project_type: 1
+
+# == Schema Information
+#
+# Table name: projects
+#
+#  id           :integer          not null, primary key
+#  name         :string
+#  description  :text
+#  project_type :integer
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#
