@@ -1,1 +1,41 @@
 <h1>HI</h1>
+
+<table class="table">
+  <thead>
+    <th>创建时间</th>
+    <th>姓名</th>
+    <th>事件类型</th>
+    <th>事件内容</th>
+  </thead>
+  <tbody>
+    <% @group_events.each do |event_owner, events| %>
+      <tr>
+        <td colspan="4">
+          <%= event_owner %>
+        </td>
+      </tr>
+      <% events.each do |event| %>
+        <tr>
+          <td>
+            <%= render_created_at(event.created_at) %>
+          </td>
+          <td>
+            <%= event.creator.email %>
+          </td>
+          <td>
+            <%= event.action %>
+          </td>
+          <td>
+            <% if event.eventable.class == Todo %>
+            <%= event.eventable.title %>
+            <% elsif event.eventable.class == Team %>
+            <%= event.eventable.name %>
+            <% elsif event.eventable.class == Project %>
+            <%= event.eventable.name %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
