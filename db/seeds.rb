@@ -7,7 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 for i in 1..3 do
-  User.create([email: "user#{i}@gmail.com", password: "111111", password_confirmation: "111111"])
+  User.create([email: "user#{i}@gmail.com", password: "111111", password_confirmation: "111111", user_name: "user#{i}"])
 end
 
 puts "3 Users' accounts created."

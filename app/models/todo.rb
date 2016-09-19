@@ -1,6 +1,6 @@
 class Todo < ApplicationRecord
   validates :title, presence: true
-  has_many :assignments
+  has_one :assignment
   belongs_to :todoable, polymorphic: true
 end
 

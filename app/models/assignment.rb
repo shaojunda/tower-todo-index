@@ -1,5 +1,7 @@
 class Assignment < ApplicationRecord
   belongs_to :todo
+  belongs_to :origin_executor, class_name: "User"
+  belongs_to :new_executor, class_name: "User"
 end
 
 # == Schema Information
