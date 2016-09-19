@@ -2,6 +2,28 @@ class Todo < ApplicationRecord
   validates :title, presence: true
   has_one :assignment
   belongs_to :todoable, polymorphic: true
+
+  include AASM
+
+  aasm do
+    state :todo_created, initial: true
+    state :processing
+    state :paused
+    state :deleted
+
+    event :process do
+      transitions from: :todo_created, to: :processing
+    end
+
+    event :pause do
+      transitions from: :processing, to: :paused
+    end
+
+    event :delete do
+      transitions from: %i(todo_created processing paused), to: :deleted
+    end
+  end
+
 end
 
 # == Schema Information
@@ -16,8 +38,10 @@ end
 #  description   :string
 #  todoable_id   :integer
 #  todoable_type :string
+#  aasm_state    :string           default("todo_created")
 #
 # Indexes
 #
+#  index_todos_on_aasm_state                     (aasm_state)
 #  index_todos_on_todoable_id_and_todoable_type  (todoable_id,todoable_type)
 #

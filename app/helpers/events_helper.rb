@@ -46,7 +46,6 @@ module EventsHelper
 
   def render_event_action(event)
     event_action = ""
-    event_action_extend = ""
     case event.action
     when "create_team"
       event_action = "创建了团队："
@@ -63,7 +62,6 @@ module EventsHelper
     when "assign_deadline_todo"
       event_action = assign_deadline_todo(event)
     end
-    event_action_extend + event_action
   end
 
   def render_event_owner(event_owner)

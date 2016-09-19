@@ -18,8 +18,10 @@ end
 #  description   :string
 #  todoable_id   :integer
 #  todoable_type :string
+#  aasm_state    :string           default("todo_created")
 #
 # Indexes
 #
+#  index_todos_on_aasm_state                     (aasm_state)
 #  index_todos_on_todoable_id_and_todoable_type  (todoable_id,todoable_type)
 #
