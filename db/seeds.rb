@@ -28,9 +28,18 @@ puts "1 Project created."
 
 Todo.create([title: "实现新增用户", todoable_id: 1, todoable_type: "Project"])
 
-Event.create([ownerable_id: 1, ownerable_type:"Project", creator_id: 1, action:"create_todo", eventable_id: 1, eventable_type: "Todo"])
+Event.create([ownerable_id: 1, ownerable_type:"Project", creator_id: 1, action:"create_todo_with_executor", eventable_id: 1, eventable_type: "Todo"])
+Assignment.create([todo_id: 1, origin_executor_id: 1, origin_deadline: "2016-09-25"])
+
 
 Todo.create([title: "实现短信发送", todoable_id: 1, todoable_type: "Project"])
-Assignment.create([todo_id: 2, origin_executor_id: 2, origin_deadline: "2016-09-25"])
+Assignment.create([todo_id: 2, origin_executor_id: 1, origin_deadline: "2016-09-25", new_executor_id: 2])
 
-Event.create([ownerable_id: 1, ownerable_type:"Project", creator_id: 1, action:"create_todo", eventable_id: 2, eventable_type: "Todo"])
+Event.create([ownerable_id: 1, ownerable_type:"Project", creator_id: 1, action:"assign_executor_todo", eventable_id: 2, eventable_type: "Todo"])
+
+Todo.create([title: "实现短信发送", todoable_id: 1, todoable_type: "Project"])
+
+assignment = Assignment.find(2)
+assignment.update_attributes!(new_deadline: "2017-09-27")
+
+Event.create([ownerable_id: 1, ownerable_type:"Project", creator_id: 1, action:"assign_deadline_todo", eventable_id: 2, eventable_type: "Todo"])

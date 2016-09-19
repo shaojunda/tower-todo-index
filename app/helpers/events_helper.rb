@@ -13,6 +13,37 @@ module EventsHelper
     end
   end
 
+  def create_todo_with_executor(event)
+    "为 #{event.eventable.assignment.origin_executor.user_name} 创建了任务："
+  end
+
+  def assign_executor_todo(event)
+    if event.eventable.assignment.new_executor.present?
+      "把 #{event.eventable.assignment.origin_executor.user_name} 的任务指派给 #{event.eventable.assignment.new_executor.user_name}："
+    else
+      "给 #{event.eventable.assignment.origin_executor.user_nam} 指派了任务："
+    end
+  end
+
+  def assign_deadline_todo(event)
+    origin_deadline = format_date_for_deadline(event.eventable.assignment.origin_deadline)
+    if event.eventable.assignment.new_deadline.present?
+      new_deadline = format_date_for_deadline(event.eventable.assignment.new_deadline)
+      "将任务完成时间从 #{origin_deadline} 修改为 #{new_deadline}"
+    else
+      "将任务完成时间从 没有截止日 修改为 #{origin_deadline}"
+    end
+  end
+
+  # 需要进一步细化 比如 本周五 下周五 今天 明天
+  def format_date_for_deadline(deadline)
+    if deadline.strftime("%Y").to_i < Time.now.year || deadline.strftime("%Y").to_i > Time.now.year
+      deadline.strftime("%Y年%-m月%d日")
+    else
+      deadline.strftime("%-m月%d日")
+    end
+  end
+
   def render_event_action(event)
     event_action = ""
     event_action_extend = ""
@@ -23,16 +54,14 @@ module EventsHelper
       event_action = "创建了项目："
     when "create_todo"
       event_action = "创建了任务："
-    when "executor_assign_todo"
-
-    end
-
-    if event.eventable.class == Todo && event.eventable.assignment.present?
-      if event.eventable.assignment.origin_executor.present? && event.eventable.assignment.new_executor.nil?
-        event_action_extend = "为#{event.eventable.assignment.origin_executor.user_name}"
-      elsif event.eventable.assignment.origin_executor.present? && event.eventable.assignment.new_executor.present?
-        event_action_extend = "把#{event.eventable.assignment.origin_executor.user_name}的任务指派给了#{event.eventable.assignment.new_executor.user_name}"
-      end
+    when "create_todo_with_executor"
+      event_action = create_todo_with_executor(event)
+    when "assign_executor_todo"
+      event_action = assign_executor_todo(event)
+    when "finish_todo"
+      event_action = "完成了任务："
+    when "assign_deadline_todo"
+      event_action = assign_deadline_todo(event)
     end
     event_action_extend + event_action
   end
