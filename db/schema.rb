@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160919143955) do
+ActiveRecord::Schema.define(version: 20160919160156) do
 
   create_table "assignments", force: :cascade do |t|
     t.integer  "origin_executor_id"
@@ -39,6 +39,14 @@ ActiveRecord::Schema.define(version: 20160919143955) do
     t.string   "ownerable_type"
     t.index ["eventable_id", "eventable_type"], name: "index_events_on_eventable_id_and_eventable_type"
     t.index ["ownerable_id", "ownerable_type"], name: "index_events_on_ownerable_id_and_ownerable_type"
+  end
+
+  create_table "project_permissions", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "project_id"
+    t.string   "level"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "projects", force: :cascade do |t|
