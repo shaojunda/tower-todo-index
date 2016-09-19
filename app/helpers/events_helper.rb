@@ -44,6 +44,10 @@ module EventsHelper
     end
   end
 
+  def cancel_todo(event)
+    "取消了 #{event.eventable.assignment.origin_executor.user_name} 的任务："
+  end
+
   def render_event_action(event)
     event_action = ""
     case event.action
@@ -61,6 +65,18 @@ module EventsHelper
       event_action = "完成了任务："
     when "assign_deadline_todo"
       event_action = assign_deadline_todo(event)
+    when "reopen_todo"
+      event_action = "重新打开了任务："
+    when "start_process_todo"
+      event_action = "开始处理这条任务："
+    when "pause_process_todo"
+      event_action = "暂停处理这条任务："
+    when "delete_todo"
+      event_action = "删除了任务："
+    when "recover_todo"
+      event_action = "恢复了任务："
+    when "cancel_todo"
+      event_action = cancel_todo(event)
     end
   end
 

@@ -1,35 +1,36 @@
-<h1>HI</h1>
 
-<table class="table">
-  <thead>
-    <th>创建时间</th>
-    <th>姓名</th>
-    <th>事件类型</th>
-    <th>事件内容</th>
-  </thead>
-  <tbody>
-    <% @group_events.each do |event_owner, events| %>
+<div class="col-md-12 col-lg-12">
+  <table class="table table-stripe">
+    <thead>
+      <th colspan="5">
+        
+      </th>
+    </thead>
+    <tbody>
+      <% @group_events.each do |event_owner, events| %>
       <tr>
         <td colspan="4">
           <%= render_event_owner(event_owner) %>
         </td>
       </tr>
       <% events.each do |event| %>
-        <tr>
-          <td>
-            <%= render_created_at(event.created_at) %>
-          </td>
-          <td>
-            <%= event.creator.user_name %>
-          </td>
-          <td>
-            <%= render_event_action(event) %>
-          </td>
-          <td>
-            <%= render_event_content(event) %>
-          </td>
-        </tr>
+      <tr>
+        <td>
+          <%= render_created_at(event.created_at) %>
+        </td>
+        <td>
+          <%= event.creator.user_name %>
+        </td>
+        <td>
+          <%= render_event_action(event) %>
+        </td>
+        <td>
+          <%= render_event_content(event) %>
+        </td>
+      </tr>
       <% end %>
-    <% end %>
-  </tbody>
-</table>
+      <% end %>
+    </tbody>
+  </table>
+
+</div>
