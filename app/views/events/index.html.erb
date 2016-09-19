@@ -26,13 +26,7 @@
             <%= event.action %>
           </td>
           <td>
-            <% if event.eventable.class == Todo %>
-            <%= event.eventable.title %>
-            <% elsif event.eventable.class == Team %>
-            <%= event.eventable.name %>
-            <% elsif event.eventable.class == Project %>
-            <%= event.eventable.name %>
-            <% end %>
+            <%= render_event_content(event) %>
           </td>
         </tr>
       <% end %>
