@@ -1,5 +1,6 @@
 class Todo < ApplicationRecord
   validates :title, presence: true
+  validates :title, length: { maximum: 1000 }
   has_one :assignment
   belongs_to :todoable, polymorphic: true
 

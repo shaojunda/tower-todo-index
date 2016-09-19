@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
   def index
-    @events = Event.limit(50)
+    @events = Event.limit(50).order("created_at desc")
     @group_events = @events.group_by{|e| e.ownerable_type}
     @current_page = 1
   end
