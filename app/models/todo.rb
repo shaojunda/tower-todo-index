@@ -11,6 +11,7 @@ class Todo < ApplicationRecord
     state :processing
     state :paused
     state :deleted
+    state :finished
 
     event :process do
       transitions from: :todo_created, to: :processing
@@ -23,6 +24,11 @@ class Todo < ApplicationRecord
     event :delete do
       transitions from: %i(todo_created processing paused), to: :deleted
     end
+
+    event :finish do
+      transitions from: %i(todo_created processing paused), to: :deleted
+    end
+
   end
 
 end
