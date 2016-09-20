@@ -1,36 +1,27 @@
 
-<div class="col-md-12 col-lg-12">
-  <table class="table table-stripe">
-    <thead>
-      <th colspan="5">
-        
-      </th>
-    </thead>
-    <tbody>
-      <% @group_events.each do |event_owner, events| %>
-      <tr>
-        <td colspan="4">
-          <%= render_event_owner(event_owner) %>
-        </td>
-      </tr>
-      <% events.each do |event| %>
-      <tr>
-        <td>
-          <%= render_created_at(event.created_at) %>
-        </td>
-        <td>
-          <%= event.creator.user_name %>
-        </td>
-        <td>
-          <%= render_event_action(event) %>
-        </td>
-        <td>
-          <%= render_event_content(event) %>
-        </td>
-      </tr>
-      <% end %>
-      <% end %>
-    </tbody>
-  </table>
 
-</div>
+      <% @group_events.each do |event_owner, events| %>
+        <div class="row">
+          <div class="col-md-12 col-lg-12 text-center">
+            <div class="owner">
+              <%= render_event_owner(event_owner, events.first) %>
+            </div>
+          </div>
+        </div>
+        <% events.each do |event| %>
+        <div class="row">
+          <div class="col-md-2 col-md-offset-2 col-lg-2">
+            <div>
+              <span><%= render_created_at(event.created_at) %></span>
+              <div class="thumb">
+                <%= render_head_pic %>
+              </div>
+              <span><%= render_creator_name(event) %></span>
+            </div>
+          </div>
+          <div class="col-md-8 col-lg-8">
+            <%= render_event_action(event) %>
+          </div>
+        </div>
+        <% end %>
+      <% end %>

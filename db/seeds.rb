@@ -43,3 +43,7 @@ assignment = Assignment.find(2)
 assignment.update_attributes!(new_deadline: "2017-09-27")
 
 Event.create([ownerable_id: 1, ownerable_type:"Project", creator_id: 1, action:"assign_deadline_todo", eventable_id: 2, eventable_type: "Todo"])
+
+Comment.create([content: "这是一个好想法", todo_id:2])
+
+Event.create([ownerable_id: 1, ownerable_type:"Project", creator_id: 2, action:"reply_todo", eventable_id: 1, eventable_type: "Comment"])
