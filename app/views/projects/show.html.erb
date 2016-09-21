@@ -1,0 +1,26 @@
+<div class="text-center">
+  <h1><%= @project.name %></h1>
+</div>
+<div class="col-md-12">
+  <div class="group">
+    <%= link_to("创建任务", new_team_project_todo_path(@team, @project), class: "btn btn-primary pull-right") %>
+  </div>
+
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <td>#</td>
+        <td>任务内容</td>
+        <td>任务描述</td>
+        <td>完成者</td>
+        <td>完成时间</td>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render :partial => "todos/todo_item", :collection => @todos, :as => :todo, locals: { team: @team, project: @project }   %>
+    </tbody>
+  </table>
+</div>
+<div class="text-center">
+  <%= will_paginate @todos %>
+</div>

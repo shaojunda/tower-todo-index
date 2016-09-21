@@ -1,6 +1,7 @@
 class Project < ApplicationRecord
   validates :name, presence: true
   belongs_to :team
+  has_many :todos, as: :todoable
 end
 
 # == Schema Information

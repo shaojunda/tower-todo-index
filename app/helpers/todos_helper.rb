@@ -3,8 +3,8 @@ module TodosHelper
     simple_format(todo.description)
   end
 
-  def render_title(todo)
-    link_to todo.title, todo_path(todo)
+  def render_title(team, project, todo)
+    link_to todo.title, team_project_todo_path(team, project, todo)
   end
 
   def render_created_at_for_todo(todo)

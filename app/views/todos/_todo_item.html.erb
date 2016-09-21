@@ -3,7 +3,7 @@
     #
   </td>
   <td>
-    <%= render_title(todo) %>
+    <%= render_title(team, project, todo) %>
   </td>
   <td>
     <%= render_todo_description(todo) %>
@@ -15,6 +15,6 @@
     <%= render_created_at_for_todo(todo) %>
   </td>
   <td>
-    <%= render partial:"todo_operate", locals: { todo: todo } %>
+    <%= render partial:"todos/todo_operate", locals: { team: team, project: project, todo: todo } %>
   </td>
 </tr>
