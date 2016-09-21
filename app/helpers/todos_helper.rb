@@ -16,10 +16,14 @@ module TodosHelper
   end
 
   def render_executor(todo)
-    if todo.assignment.present? and todo.assignment.origin_executor.present?
-      link_to todo.assignment.origin_executor.user_name, "#"
+    if todo.assignment.present? and todo.assignment.new_executor.present?
+      link_to todo.assignment.new_executor.user_name, "#"
     else
-      "还没有指定的完成者"
+      if todo.assignment.present? and todo.assignment.origin_executor.present?
+        link_to todo.assignment.origin_executor.user_name, "#"
+      else
+        "还没有指定的完成者"
+      end
     end
   end
 

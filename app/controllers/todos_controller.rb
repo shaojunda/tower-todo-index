@@ -50,6 +50,13 @@ class TodosController < ApplicationController
     @assignment = @todo.assignment
     if @assignment.blank?
       @assignment = Assignment.new
+    else
+      if @assignment.origin_executor.present?
+        @assignment.origin_executor_email = @assignment.origin_executor.email
+      end
+      if @assignment.new_executor.present?
+        @assignment.new_executor_email = @assignment.new_executor.email
+      end
     end
   end
 
@@ -101,7 +108,7 @@ class TodosController < ApplicationController
     if new_deadline.present?
       new_params[:new_deadline] = new_deadline
     end
-
+    binding.pry
     @assignment = @todo.assignment
 
     if @assignment.present?
