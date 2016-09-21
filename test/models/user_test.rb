@@ -24,7 +24,6 @@ end
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  user_name              :string
-#  project_permission_id  :integer
 #
 # Indexes
 #
