@@ -3,7 +3,7 @@ module EventsHelper
   EVENT_ACTION = { create_team: "创建了团队", create_project: "创建了项目", create_todo: "创建了任务", create_todo_with_executor: "", assign_executor_todo: "", finish_todo: "完成了任务", assign_deadline_todo: "", reopen_todo: "重新打开了任务", start_process_todo: "开始处理这条任务", pause_process_todo: "暂停处理这条任务", delete_todo: "删除了任务", recover_todo: "恢复了任务", cancel_todo: "", reply_todo: "回复了任务" }
 
   def render_created_at(create_at)
-    create_at.strftime("%Y-%m-%d %H:%M")
+    create_at.strftime("%H:%M")
   end
 
   def render_event_content(event)
@@ -14,7 +14,7 @@ module EventsHelper
     elsif event.eventable.class == Project
       event.eventable.name
     elsif event.eventable.class == Comment
-      event.eventable.todo.todoable.name
+      event.eventable.todo.name
     end
   end
 
@@ -109,8 +109,19 @@ module EventsHelper
     truncate(event.eventable.todo.title, length: 77)
   end
 
-  def render_event_owner(event_owner, event)
+  def render_event_owner(day, event)
+    owner = ""
+    if event.eventable.class == Todo
+      owner = event.eventable.todoable.name
+    elsif event.eventable.class == Team
+      owner = event.eventable.name
+    elsif event.eventable.class == Project
+      owner = event.eventable.name
+    elsif event.eventable.class == Comment
+      owner = event.eventable.todo.todoable.name
+    end
     link_to render_event_content(event), "#"
+    render partial: "events/day_event", locals: {day_event: day,  event_content: owner}
   end
 
 end

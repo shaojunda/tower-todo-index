@@ -1,43 +1,56 @@
-<% @group_events.each do |event_owner, events| %>
-  <div class="row">
-    <div class="col-md-12 col-lg-12 text-center">
-      <div class="owner">
-        <%= render_event_owner(event_owner, events.first) %>
-      </div>
-    </div>
+<%= render partial:"show_events", locals: { group_events: @group_events, days: @days } %>
+<div id="moreEventContainer">
+  <div id="loadbtn" class="text-center">
+    <%= link_to("正在加载更多...", "javascript:void(0);", class:"btn btn-default", id: "loadMore") %>
   </div>
-  <% events.each do |event| %>
-  <div class="row">
-    <div class="col-md-2 col-md-offset-2 col-lg-2">
-      <div>
-        <span><%= render_created_at(event.created_at) %></span>
-        <div class="thumb">
-          <%= render_head_pic %>
-        </div>
-        <span><%= render_creator_name(event) %></span>
-      </div>
-    </div>
-    <div class="col-md-8 col-lg-8">
-      <%= render_event_action(event) %>
-    </div>
-  </div>
-  <% end %>
-<% end %>
+</div>
 
 <% content_for :javascripts do %>
   <script>
-
+    var page = 1;
+    var hasMore = true;
+    var loadPageComplete = true;
     $(function() {
-
+      scrollEventBottom();
     });
 
-    function getMoreEvent() {
-
+    function scrollEventBottom() {
+      $(window).scroll(function() {
+         if(Math.abs($(window).scrollTop() + $(window).height() - $(document).height()) <= 5) {
+           if (hasMore && loadPageComplete) {
+             page++;
+             getMoreEvent();
+             loadPageComplete = false;
+             moreEventContainerToggle();
+           }
+         }
+      });
     }
 
+    function moreEventContainerToggle() {
+      if ($("#loadMore").is(":visible")) {
+        $(this).hide();
+      } else {
+        $(this).show();
+      }
+    }
 
-
-
-
+    function getMoreEvent() {
+      $.ajax({
+        url: "/events/get_more_event/",
+        data: {current_page: page},
+        method: "get",
+        dataType: "json",
+        success: function(data){
+          if (data.size < 10) {
+            hasMore = false
+            $("#loadMore").text("没有更多内容了");
+          }
+          $("#loadbtn").before(data.template);
+          moreEventContainerToggle();
+          loadPageComplete = true;
+        }
+      });
+    }
   </script>
 <% end %>

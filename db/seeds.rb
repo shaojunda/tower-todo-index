@@ -12,36 +12,47 @@ end
 
 puts "3 Users' accounts created."
 
-Team.create([name: "Tower 测试", user_id: 1])
+Team.create([name: "Tower 测试", user_id: 1, created_at: "2016-09-01"])
 
-Event.create([ownerable_id: 1, ownerable_type:"Team", creator_id: 1, action:"create_team", eventable_type: "Team", eventable_id: 1])
+Event.create([ownerable_id: 1, ownerable_type:"Team", creator_id: 1, action:"create_team", eventable_type: "Team", eventable_id: 1 , created_at: "2016-09-01"])
 
 puts "1 Team created."
 
 
 
-Project.create([name: "tower-todo-index-1", team_id: 1])
+Project.create([name: "tower-todo-index-1", team_id: 1, created_at: "2016-09-01"])
 
-Event.create([ownerable_id: 1, ownerable_type:"Project", creator_id: 1, action:"create_project", eventable_id: 1, eventable_type: "Project"])
+Event.create([ownerable_id: 1, ownerable_type:"Project", creator_id: 1, action:"create_project", eventable_id: 1, eventable_type: "Project", created_at: "2016-09-01"])
 
 puts "1 Project created."
 
 
 require "csv"
 
-CSV.foreach("import/todos.csv") do |row|
+csv_text = File.read('import/todos.csv')
+csv = CSV.parse(csv_text, :headers => false)
+
+csv.each_with_index do |row, i|
+  next if i == 0
 
   Todo.create(
 
     title: row[0],
     assignment_id: row[1],
     todoable_id: row[2],
-    todoable_type: row[3]
-
+    todoable_type: row[3],
+    created_at: row[4]
   )
 end
 
-CSV.foreach("import/assignments.csv") do |row|
+puts "todos created."
+
+csv_text = File.read('import/assignments.csv')
+csv = CSV.parse(csv_text, :headers => false)
+
+csv.each_with_index do |row, i|
+  next if i == 0
+
   origin_deadline =
     begin
       Date.parse(row[3])
@@ -52,21 +63,36 @@ CSV.foreach("import/assignments.csv") do |row|
 
     todo_id: row[0],
     origin_executor_id: row[1],
-    origin_deadline: row[2]
-
+    origin_deadline: row[2],
+    created_at: row[3]
   )
 end
 
-CSV.foreach("import/comments.csv") do |row|
+puts "assignments created."
+
+csv_text = File.read('import/comments.csv')
+csv = CSV.parse(csv_text, :headers => false)
+
+csv.each_with_index do |row, i|
+  next if i == 0
+
   Comment.create(
 
     todo_id: row[0],
-    content: row[1]
+    content: row[1],
+    created_at: row[2]
 
   )
 end
 
-CSV.foreach("import/events.csv") do |row|
+puts "comments created."
+
+csv_text = File.read('import/events.csv')
+csv = CSV.parse(csv_text, :headers => false)
+
+csv.each_with_index do |row, i|
+  next if i == 0
+
   Event.create(
 
     creator_id: row[0],
@@ -74,31 +100,10 @@ CSV.foreach("import/events.csv") do |row|
     eventable_id: row[2],
     eventable_type: row[3],
     ownerable_id: row[4],
-    ownerable_type: row[5]
+    ownerable_type: row[5],
+    created_at: row[6]
 
   )
 end
 
-
-
-# Todo.create([title: "实现新增用户", todoable_id: 1, todoable_type: "Project"])
-#
-# Event.create([ownerable_id: 1, ownerable_type:"Project", creator_id: 1, action:"create_todo_with_executor", eventable_id: 1, eventable_type: "Todo"])
-# Assignment.create([todo_id: 1, origin_executor_id: 1, origin_deadline: "2016-09-25"])
-#
-#
-# Todo.create([title: "实现短信发送", todoable_id: 1, todoable_type: "Project"])
-# Assignment.create([todo_id: 2, origin_executor_id: 1, origin_deadline: "2016-09-25", new_executor_id: 2])
-#
-# Event.create([ownerable_id: 1, ownerable_type:"Project", creator_id: 1, action:"assign_executor_todo", eventable_id: 2, eventable_type: "Todo"])
-#
-# Todo.create([title: "实现短信发送", todoable_id: 1, todoable_type: "Project"])
-#
-# assignment = Assignment.find(2)
-# assignment.update_attributes!(new_deadline: "2017-09-27")
-#
-# Event.create([ownerable_id: 1, ownerable_type:"Project", creator_id: 1, action:"assign_deadline_todo", eventable_id: 2, eventable_type: "Todo"])
-#
-# Comment.create([content: "这是一个好想法", todo_id:2])
-#
-# Event.create([ownerable_id: 1, ownerable_type:"Project", creator_id: 2, action:"reply_todo", eventable_id: 1, eventable_type: "Comment"])
+puts "events created."

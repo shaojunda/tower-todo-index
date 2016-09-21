@@ -34,6 +34,7 @@ gem "bootstrap-sass"
 gem "simple_form"
 gem "aasm"
 gem "devise"
+gem "better_errors"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
