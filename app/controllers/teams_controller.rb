@@ -2,11 +2,12 @@ class TeamsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @teams = Team.all
+    @teams = Team.includes(:user).all.paginate(page: params[:page], per_page: 50)
   end
 
   def show
     @team = Team.find(params[:id])
+    @projects = @team.projects.paginate(page: params[:page], per_page: 10)
   end
 
   def new
@@ -15,6 +16,7 @@ class TeamsController < ApplicationController
 
   def create
     @team = Team.new(team_params)
+    @team.user = current_user
     if @team.save
       flash[:notice] = "成功创建了团队"
       redirect_to teams_path

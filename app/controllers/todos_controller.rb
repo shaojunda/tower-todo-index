@@ -32,7 +32,7 @@ class TodosController < ApplicationController
     @todo = Todo.find(params[:id])
     if @todo.update(todo_params)
       flash[:notice] = "Update Success."
-      redirect_to todos_path
+      redirect_to team_project_todos_path
     else
       render :edit
     end
@@ -42,7 +42,7 @@ class TodosController < ApplicationController
     @todo = Todo.find(params[:id])
     @todo.destroy
     flash[:alert] = "Todo deleted."
-    redirect_to todos_path
+    redirect_to team_project_todos_path
   end
 
   private
