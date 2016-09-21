@@ -1,4 +1,4 @@
-<%= simple_form_for @todo do |f| %>
+<%= simple_form_for [@team, @project, @todo] do |f| %>
   <div class="form-group">
     <%= f.input :title, label: "任务内容", input_html: { class: "form-control" } %>
     <%= f.input :description, label: "任务描述", input_html: { class: "form-control" } %>
@@ -26,7 +26,11 @@
       </div>
     <% end %>
   </div>
-  <%= f.submit "添加任务", class: "btn btn-primary", data: { disable_with: "添加中..." } %>
+  <% if ["new", "create"].include?(controller.action_name) %>
+    <%= f.submit "添加任务", class: "btn btn-primary", data: { disable_with: "添加中..." } %>
+  <% else %>
+    <%= f.submit "更新", class: "btn btn-primary", data: { disable_with: "更新中..." } %>
+  <% end %>
 <% end %>
 
 <% content_for :javascripts do %>

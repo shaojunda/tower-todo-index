@@ -8,7 +8,7 @@ module TodosHelper
   end
 
   def render_created_at_for_todo(todo)
-    if todo.assignment
+    if todo.assignment.present? and todo.assignment.origin_deadline.present?
       todo.assignment.origin_deadline.strftime("%Y年%-m月%d日")
     else
       "没有截止日期"
@@ -16,7 +16,7 @@ module TodosHelper
   end
 
   def render_executor(todo)
-    if todo.assignment
+    if todo.assignment.present? and todo.assignment.origin_executor.present?
       link_to todo.assignment.origin_executor.user_name, "#"
     else
       "还没有指定的完成者"
