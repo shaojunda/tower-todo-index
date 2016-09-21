@@ -1,6 +1,6 @@
 class TodosController < ApplicationController
   def index
-    @todos = Todo.all
+    @todos = Todo.includes([{:assignment => :origin_executor}, :assignment]).all
   end
 
   def new

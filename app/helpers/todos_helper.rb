@@ -7,7 +7,7 @@ module TodosHelper
     link_to todo.title, todo_path(todo)
   end
 
-  def render_created_at(todo)
+  def render_created_at_for_todo(todo)
     if todo.assignment
       todo.assignment.origin_deadline.strftime("%Y年%-m月%d日")
     else

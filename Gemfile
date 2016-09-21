@@ -34,6 +34,7 @@ gem "bootstrap-sass"
 gem "simple_form"
 gem "aasm"
 gem "devise"
+gem "will_paginate"
 gem "better_errors"
 
 group :development, :test do
@@ -43,6 +44,7 @@ group :development, :test do
   gem "rubocop"
   gem "pry"
   gem "pry-nav"
+  gem "bullet"
 end
 
 group :development do

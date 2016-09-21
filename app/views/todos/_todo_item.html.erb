@@ -12,7 +12,7 @@
     <%= render_executor(todo) %>
   </td>
   <td>
-    <%= render_created_at(todo) %>
+    <%= render_created_at_for_todo(todo) %>
   </td>
   <td>
     <%= render partial:"todo_operate", locals: { todo: todo } %>
