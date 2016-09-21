@@ -10,6 +10,10 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :todos
+  resources :teams do
+    resources :project do
+      resources :todos
+    end
+  end
 
 end
