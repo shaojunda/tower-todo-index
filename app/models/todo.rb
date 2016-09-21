@@ -4,6 +4,7 @@ class Todo < ApplicationRecord
   has_one :assignment, :dependent => :destroy
   belongs_to :todoable, polymorphic: true
   belongs_to :user
+  has_many :comments
 
   include AASM
 

@@ -24,6 +24,7 @@ class TodosController < ApplicationController
   end
 
   def show
+    @comments = @todo.comments.paginate(page: params[:page], per_page: 10)
   end
 
   def edit

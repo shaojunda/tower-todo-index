@@ -1,11 +1,3 @@
-require 'test_helper'
-
-class CommentTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
-end
-
 # == Schema Information
 #
 # Table name: comments
@@ -17,3 +9,11 @@ end
 #  todo_id    :integer
 #  user_id    :integer
 #
+
+require 'test_helper'
+
+class CommentsControllerTest < ActionDispatch::IntegrationTest
+  # test "the truth" do
+  #   assert true
+  # end
+end

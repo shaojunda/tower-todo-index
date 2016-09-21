@@ -1,0 +1,17 @@
+<tr>
+  <td>
+    #
+  </td>
+  <td>
+    <%= render_comment_content(comment) %>
+  </td>
+  <td>
+    <%= render_coment_creator(comment) %>
+  </td>
+  <td>
+    <%= render_created_at_for_comment(comment) %>
+  </td>
+  <td>
+    <%= render partial:"comments/comment_operate", locals: { team: team, project: project, todo: todo, comment: comment } %>
+  </td>
+</tr>

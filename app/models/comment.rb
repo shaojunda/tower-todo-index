@@ -1,5 +1,7 @@
 class Comment < ApplicationRecord
   belongs_to :todo
+  belongs_to :user
+  validates :content, presence: true
 end
 
 # == Schema Information
@@ -11,4 +13,5 @@ end
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  todo_id    :integer
+#  user_id    :integer
 #

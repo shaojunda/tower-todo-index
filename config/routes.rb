@@ -12,7 +12,9 @@ Rails.application.routes.draw do
 
   resources :teams do
     resources :projects do
-      resources :todos
+      resources :todos do
+        resources :comments
+      end
     end
   end
 
