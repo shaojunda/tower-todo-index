@@ -1,8 +1,9 @@
 class Todo < ApplicationRecord
   validates :title, presence: true
   validates :title, length: { maximum: 1000 }
-  has_one :assignment
+  has_one :assignment, :dependent => :destroy
   belongs_to :todoable, polymorphic: true
+  belongs_to :user
 
   include AASM
 
@@ -46,6 +47,7 @@ end
 #  todoable_id   :integer
 #  todoable_type :string
 #  aasm_state    :string           default("todo_created")
+#  user_id       :integer
 #
 # Indexes
 #

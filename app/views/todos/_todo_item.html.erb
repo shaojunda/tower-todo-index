@@ -1,0 +1,20 @@
+<tr>
+  <td>
+    #
+  </td>
+  <td>
+    <%= render_title(todo) %>
+  </td>
+  <td>
+    <%= render_todo_description(todo) %>
+  </td>
+  <td>
+    <%= render_executor(todo) %>
+  </td>
+  <td>
+    <%= render_created_at(todo) %>
+  </td>
+  <td>
+    <%= render partial:"todo_operate", locals: { todo: todo } %>
+  </td>
+</tr>

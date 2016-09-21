@@ -1,11 +1,3 @@
-require 'test_helper'
-
-class TodoTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
-end
-
 # == Schema Information
 #
 # Table name: todos
@@ -26,3 +18,11 @@ end
 #  index_todos_on_aasm_state                     (aasm_state)
 #  index_todos_on_todoable_id_and_todoable_type  (todoable_id,todoable_type)
 #
+
+require 'test_helper'
+
+class TodosControllerTest < ActionDispatch::IntegrationTest
+  # test "the truth" do
+  #   assert true
+  # end
+end

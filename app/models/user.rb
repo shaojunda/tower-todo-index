@@ -3,6 +3,27 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
+  has_many :project_permissions
+
+
+  def is_owner?(project_id)
+    permission = self.project_permissions.find_by_project_id(project_id)
+    if permission.level == "owner"
+      true
+    else
+      false
+    end
+  end
+
+  def has_permission_to_operate_todo?(project_id)
+    permission = self.project_permissions.find_by_project_id(project_id)
+    if permission.level == "owner" or permission.level == "member"
+      true
+    else
+      false
+    end
+  end
+
 end
 
 # == Schema Information
@@ -23,6 +44,7 @@ end
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  user_name              :string
+#  project_permission_id  :integer
 #
 # Indexes
 #
