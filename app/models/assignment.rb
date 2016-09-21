@@ -2,6 +2,7 @@ class Assignment < ApplicationRecord
   belongs_to :todo
   belongs_to :origin_executor, class_name: "User"
   belongs_to :new_executor, class_name: "User"
+  attr_accessor :origin_executor_email, :new_executor_email
 end
 
 # == Schema Information

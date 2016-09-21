@@ -1,0 +1,43 @@
+<%= simple_form_for @todo do |f| %>
+  <div class="form-group">
+    <%= f.input :title, label: "任务内容", input_html: { class: "form-control" } %>
+    <%= f.input :description, label: "任务描述", input_html: { class: "form-control" } %>
+    <%= f.simple_fields_for @assignment do |af| %>
+      <%= af.input :origin_executor_email, label: "指派给某人", placeholder: "请填入用户邮箱" %>
+      <%= af.input :new_executor_email, label: "指派给另一个人", placeholder: "请填入用户邮箱"%>
+      <p>
+        <b>原截止日期</b>
+      </p>
+      <div class='input-group date' id='datetimepicker1'>
+          <input type='text' name="todo[assignment][origin_deadline]" placeholder="原截止日期" class="form-control" />
+          <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+          </span>
+      </div>
+      <br />
+      <p>
+        <b>新截止日期</b>
+      </p>
+      <div class='input-group date' id='datetimepicker2'>
+          <input type='text' name="todo[assignment][new_deadline]" placeholder="新截止日期" class="form-control" />
+          <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+          </span>
+      </div>
+    <% end %>
+  </div>
+  <%= f.submit "添加任务", class: "btn btn-primary", data: { disable_with: "添加中..." } %>
+<% end %>
+
+<% content_for :javascripts do %>
+  <script type="text/javascript">
+    $(function () {
+        $('#datetimepicker1').datetimepicker({
+          format: 'YYYY-MM-DD'
+        });
+        $('#datetimepicker2').datetimepicker({
+          format: 'YYYY-MM-DD'
+        });
+    });
+  </script>
+<% end %>
