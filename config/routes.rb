@@ -4,11 +4,7 @@ Rails.application.routes.draw do
 
   root "events#index"
 
-  resources :events do
-    collection do
-      get :get_more_event
-    end
-  end
+
 
   resources :teams do
     resources :projects do
@@ -16,6 +12,13 @@ Rails.application.routes.draw do
         resources :comments
       end
     end
+
+    resources :events do
+      collection do
+        get :get_more_event
+      end
+    end
+    
   end
 
 end

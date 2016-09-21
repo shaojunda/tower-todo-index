@@ -3,8 +3,10 @@ class EventsController < ApplicationController
   before_action :get_current_page
 
   def index
-    @events = Event.recent.limit(50)
+    @team = Team.find(params[:team_id])
+    @events = @team.events.recent.limit(50)
     @group_events = @events.includes(:ownerable, :creator, :eventable).group_by{|e| e.created_at.to_date}
+    @events_size = @events.size
     session.delete(:days)
     session.delete(:owners)
   end

@@ -2,6 +2,7 @@ class Event < ApplicationRecord
   belongs_to :ownerable, polymorphic: true
   belongs_to :creator, class_name: "User"
   belongs_to :eventable, polymorphic: true
+  belongs_to :team
 
   scope :recent, -> {order("created_at DESC")}
 end
@@ -19,6 +20,7 @@ end
 #  updated_at     :datetime         not null
 #  ownerable_id   :integer
 #  ownerable_type :string
+#  team_id        :integer
 #
 # Indexes
 #

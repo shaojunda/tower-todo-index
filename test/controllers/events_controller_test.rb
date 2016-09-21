@@ -11,6 +11,7 @@
 #  updated_at     :datetime         not null
 #  ownerable_id   :integer
 #  ownerable_type :string
+#  team_id        :integer
 #
 # Indexes
 #

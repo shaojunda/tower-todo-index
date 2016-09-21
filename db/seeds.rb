@@ -42,10 +42,9 @@ csv.each_with_index do |row, i|
   Todo.create(
 
     title: row[0],
-    assignment_id: row[1],
-    todoable_id: row[2],
-    todoable_type: row[3],
-    created_at: row[4]
+    todoable_id: row[1],
+    todoable_type: row[2],
+    created_at: row[3]
   )
 end
 
@@ -105,7 +104,8 @@ csv.each_with_index do |row, i|
     eventable_type: row[3],
     ownerable_id: row[4],
     ownerable_type: row[5],
-    created_at: row[6]
+    created_at: row[6],
+    team_id: row[7]
 
   )
 end

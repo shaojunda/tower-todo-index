@@ -5,12 +5,20 @@
   </div>
 </div>
 
+<input type="hidden" id="teamId" name="teamId" value="<%= @team.id %>">
+<input type="hidden" id="eventsSize" value="<%= @events_size %>">
+
 <% content_for :javascripts do %>
   <script>
     var page = 1;
     var hasMore = true;
     var loadPageComplete = true;
     $(function() {
+      if (parseInt($("#eventsSize").val()) == 0) {
+        hasMore = false;
+        $("#loadMore").text("没有更多内容了");
+        moreEventContainerToggle();
+      }
       scrollEventBottom();
     });
 
@@ -19,7 +27,8 @@
          if(Math.abs($(window).scrollTop() + $(window).height() - $(document).height()) <= 5) {
            if (hasMore && loadPageComplete) {
              page++;
-             getMoreEvent();
+             var teamId = $("#teamId").val()
+             getMoreEvent(teamId);
              loadPageComplete = false;
              moreEventContainerToggle();
            }
@@ -35,9 +44,9 @@
       }
     }
 
-    function getMoreEvent() {
+    function getMoreEvent(teamId) {
       $.ajax({
-        url: "/events/get_more_event/",
+        url: "/teams/" + teamId + "/events/get_more_event",
         data: {current_page: page},
         method: "get",
         dataType: "json",

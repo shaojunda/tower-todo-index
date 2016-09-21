@@ -1,6 +1,7 @@
 class Team < ApplicationRecord
   validates :name, presence: true
   has_many :projects
+  has_many :events
   belongs_to :user
 end
 
