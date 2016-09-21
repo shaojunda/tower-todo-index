@@ -109,19 +109,23 @@ module EventsHelper
     truncate(event.eventable.todo.title, length: 77)
   end
 
-  def render_event_owner(day, event)
-    owner = ""
-    if event.eventable.class == Todo
-      owner = event.eventable.todoable.name
-    elsif event.eventable.class == Team
-      owner = event.eventable.name
-    elsif event.eventable.class == Project
-      owner = event.eventable.name
-    elsif event.eventable.class == Comment
-      owner = event.eventable.todo.todoable.name
-    end
-    link_to render_event_content(event), "#"
-    render partial: "events/day_event", locals: {day_event: day,  event_content: owner}
+  def render_event_owner(event_owner)
+    # owner = ""
+    # if event.ownerable.class == Team
+    #   owner = event.ownerable.name
+    # elsif event.ownerable.class == Project
+    #   owner = event.ownerable.name
+    # end
+    # render partial: "events/day_event", locals: {day_event: day,  event_content: owner}
+    link_to event_owner, "#"
+  end
+
+  def render_event_owner_day(day)
+    day
+  end
+
+  def render_owner(event)
+      link_to event.ownerable.name, "#"
   end
 
 end

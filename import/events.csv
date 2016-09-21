@@ -1,20 +1,20 @@
 creator_id,action,eventable_id,eventable_type,ownerable_id,ownerable_type,created_at
 1,create_todo,1,Todo,1,Project,2016-09-11 11:10:00
 1,create_todo,2,Todo,1,Project,2016-09-11 11:20:00
-1,create_todo,3,Todo,1,Project,2016-09-11 11:30:00
+1,create_todo,3,Todo,2,Project,2016-09-11 11:30:00
 2,create_todo,4,Todo,1,Project,2016-09-11 11:40:00
 3,create_todo,5,Todo,1,Project,2016-09-12 10:32:00
 2,create_todo,6,Todo,1,Project,2016-09-12 10:35:00
 2,create_todo,7,Todo,1,Project,2016-09-12 10:40:00
-2,create_todo,8,Todo,1,Project,2016-09-12 10:42:00
-3,create_todo,9,Todo,1,Project,2016-09-12 10:50:00
+2,create_todo,8,Todo,2,Project,2016-09-12 10:42:00
+3,create_todo,9,Todo,2,Project,2016-09-12 10:50:00
 3,create_todo,10,Todo,1,Project,2016-09-13 14:00:00
 1,create_todo,11,Todo,1,Project,2016-09-13 14:00:00
 1,create_todo,12,Todo,1,Project,2016-09-13 10:10:00
-1,create_todo,13,Todo,1,Project,2016-09-13 14:00:00
+1,create_todo,13,Todo,2,Project,2016-09-13 14:00:00
 2,create_todo,14,Todo,1,Project,2016-09-13 12:00:00
 2,create_todo,15,Todo,1,Project,2016-09-13 14:00:00
-1,create_todo,16,Todo,1,Project,2016-09-13 15:00:00
+1,create_todo,16,Todo,2,Project,2016-09-13 15:00:00
 1,create_todo,17,Todo,1,Project,2016-09-13 15:30:00
 1,create_todo,18,Todo,1,Project,2016-09-13 16:00:00
 2,create_todo,19,Todo,1,Project,2016-09-14 10:00:00

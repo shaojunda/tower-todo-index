@@ -6,6 +6,7 @@ class EventsController < ApplicationController
     @events = Event.order("created_at desc").limit(10)
     @group_events = @events.group_by{|e| e.created_at.to_date}
     session.delete(:days)
+    session.delete(:owners)
   end
 
   def get_more_event
