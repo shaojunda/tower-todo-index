@@ -9,6 +9,12 @@ Rails.application.routes.draw do
   resources :teams do
     resources :projects do
       resources :todos do
+        member do
+          get :process_todo
+          get :pause_todo
+          get :finish_todo
+          get :reopen_todo
+        end
         resources :comments
       end
     end

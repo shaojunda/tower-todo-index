@@ -18,7 +18,6 @@ end
 #  todoable_id   :integer
 #  todoable_type :string
 #  aasm_state    :string           default("todo_created")
-#  user_id       :integer
 #
 # Indexes
 #

@@ -3,13 +3,16 @@
     #
   </td>
   <td>
-    <%= render_title(team, project, todo) %>
+    <%= render_todo_title(team, project, todo) %>
   </td>
   <td>
     <%= render_todo_description(todo) %>
   </td>
   <td>
-    <%= render_executor(todo) %>
+    <%= render_todo_state(todo) %>
+  </td>
+  <td>
+    <%= render_todo_executor(todo) %>
   </td>
   <td>
     <%= render_created_at_for_todo(todo) %>

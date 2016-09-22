@@ -18,7 +18,6 @@ class TodosController < ApplicationController
 
   def create
     @todo = @project.todos.build(todo_params)
-    @todo.user = current_user
     if @todo.save!
       assignment_params
     else
@@ -43,8 +42,32 @@ class TodosController < ApplicationController
   end
 
   def destroy
-    @todo.destroy
-    flash[:alert] = "任务已删除"
+    @todo.delete!
+    flash[:alert] = "已删除这个任务"
+    redirect_to team_project_path(@team, @project)
+  end
+
+  def process_todo
+    @todo.process!
+    flash[:notice] = "开始处理这个任务"
+    redirect_to team_project_path(@team, @project)
+  end
+
+  def pause_todo
+    @todo.pause!
+    flash[:notice] = "暂停处理这个任务"
+    redirect_to team_project_path(@team, @project)
+  end
+
+  def finish_todo
+    @todo.finish!
+    flash[:notice] = "已完成这个任务"
+    redirect_to team_project_path(@team, @project)
+  end
+
+  def reopen_todo
+    @todo.reopen!
+    flash[:notice] = "已重新打开这个任务"
     redirect_to team_project_path(@team, @project)
   end
 
@@ -112,7 +135,6 @@ class TodosController < ApplicationController
     if new_deadline.present?
       new_params[:new_deadline] = new_deadline
     end
-    binding.pry
     @assignment = @todo.assignment
 
     if @assignment.present?

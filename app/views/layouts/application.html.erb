@@ -8,11 +8,12 @@
   </head>
 
   <body>
-    <%= render partial: "common/flashes" %>
-    <%= render partial: "common/navbar" %>
-    <%= yield %>
-    <%= render partial: "common/footer" %>
-
+    <div class="container">
+      <%= render partial: "common/flashes" %>
+      <%= render partial: "common/navbar" %>
+      <%= yield %>
+      <%= render partial: "common/footer" %>
+    </div>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= yield :javascripts %>
   </body>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160922063906) do
+ActiveRecord::Schema.define(version: 20160922075135) do
 
   create_table "assignments", force: :cascade do |t|
     t.integer  "origin_executor_id"
@@ -84,7 +84,6 @@ ActiveRecord::Schema.define(version: 20160922063906) do
     t.integer  "todoable_id"
     t.string   "todoable_type"
     t.string   "aasm_state",    default: "todo_created"
-    t.integer  "user_id"
     t.index ["aasm_state"], name: "index_todos_on_aasm_state"
     t.index ["todoable_id", "todoable_type"], name: "index_todos_on_todoable_id_and_todoable_type"
   end

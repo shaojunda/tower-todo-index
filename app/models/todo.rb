@@ -3,7 +3,6 @@ class Todo < ApplicationRecord
   validates :title, length: { maximum: 1000 }
   has_one :assignment, :dependent => :destroy
   belongs_to :todoable, polymorphic: true
-  belongs_to :user
   has_many :comments
 
   include AASM
@@ -11,7 +10,6 @@ class Todo < ApplicationRecord
   aasm do
     state :todo_created, initial: true
     state :processing
-    state :paused
     state :deleted
     state :finished
 
@@ -20,7 +18,7 @@ class Todo < ApplicationRecord
     end
 
     event :pause do
-      transitions from: :processing, to: :paused
+      transitions from: :processing, to: :todo_created
     end
 
     event :delete do
@@ -28,8 +26,14 @@ class Todo < ApplicationRecord
     end
 
     event :finish do
-      transitions from: %i(todo_created processing paused), to: :deleted
+      transitions from: %i(todo_created processing paused), to: :finished
     end
+
+    event :reopen do
+      transitions from: :finished, to: :todo_created
+    end
+
+
 
   end
 
