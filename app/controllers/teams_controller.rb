@@ -1,8 +1,10 @@
 class TeamsController < ApplicationController
   before_action :authenticate_user!
+  before_action :check_team_permission, :except => :index
 
   def index
-    @teams = Team.includes(:user).all.paginate(page: params[:page], per_page: 50)
+    team_permissions = current_user.team_permissions.select("team_id")
+    @teams = Team.includes(:user).where( id: team_permissions ).paginate(page: params[:page], per_page: 50)
   end
 
   def show
@@ -22,6 +24,16 @@ class TeamsController < ApplicationController
       redirect_to teams_path
     else
       render :new
+    end
+  end
+
+
+  protected
+
+  def check_team_permission
+    unless current_user.has_permission_to_access_to_team?(params[:id])
+      flash[:alert] = "等等，你好像不是我们机组的"
+      redirect_to "/"
     end
   end
 

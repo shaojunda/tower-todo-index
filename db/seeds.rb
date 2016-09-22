@@ -119,3 +119,11 @@ ProjectPermission.create([user_id:3, project_id:1, level:"member"])
 ProjectPermission.create([user_id:1, project_id:2, level:"owner"])
 ProjectPermission.create([user_id:2, project_id:2, level:"member"])
 ProjectPermission.create([user_id:3, project_id:2, level:"member"])
+
+puts "project permission created."
+
+TeamPermission.create([user_id:1, team_id:1, level:"owner"])
+TeamPermission.create([user_id:2, team_id:1, level:"member"])
+TeamPermission.create([user_id:3, team_id:1, level:"member"])
+
+puts "team permission created."
