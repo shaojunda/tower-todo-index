@@ -1,5 +1,8 @@
 class ProjectsController < ApplicationController
   before_action :authenticate_user!
+  before_action only: [:show, :edit, :update, :destroy] do
+    check_permission(params[:id])
+  end
 
   def show
     @team = Team.find(params[:team_id])

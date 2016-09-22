@@ -3,6 +3,9 @@ class TodosController < ApplicationController
   before_action :find_team_and_project, :except => [:index]
   before_action :find_todo, :except => [:index, :new, :create]
   before_action :find_assignment, :only => [:show, :edit]
+  before_action do
+    check_permission(params[:project_id])
+  end
 
   def index
     @todos = Todo.includes([{:assignment => :origin_executor}, :assignment]).all.paginate(page: params[:page], per_page: 50)

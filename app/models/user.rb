@@ -8,7 +8,7 @@ class User < ApplicationRecord
 
   def is_owner?(project_id)
     permission = self.project_permissions.find_by_project_id(project_id)
-    if permission.level == "owner"
+    if permission.present? && permission.level == "owner"
       true
     else
       false
@@ -17,7 +17,7 @@ class User < ApplicationRecord
 
   def has_permission_to_operate_todo?(project_id)
     permission = self.project_permissions.find_by_project_id(project_id)
-    if permission.level == "owner" or permission.level == "member"
+    if permission.present? && (permission.level == "owner" or permission.level == "member")
       true
     else
       false
