@@ -5,6 +5,6 @@
 
 ## 开发用帐号(优先使用 user1)
 
- a: user1@gmail.com p: 111111
- a: user2@gmail.com p: 111111
- a: user3@gmail.com p: 111111
+- a: user1@gmail.com p: 111111
+- a: user2@gmail.com p: 111111
+- a: user3@gmail.com p: 111111
