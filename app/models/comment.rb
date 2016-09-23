@@ -2,6 +2,12 @@ class Comment < ApplicationRecord
   belongs_to :todo
   belongs_to :user
   validates :content, presence: true
+
+  after_save :generate_event
+
+  def generate_event
+    EventService.new(self.todo.todoable, self, self.user, ENV["REPLY_TODO"], self.todo.todoable.team).generate_event
+  end
 end
 
 # == Schema Information

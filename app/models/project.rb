@@ -7,7 +7,6 @@ class Project < ApplicationRecord
   after_save :assign_permission_and_generate_event
 
   def assign_permission_and_generate_event
-    binding.pry
     ProjectPermission.create([user_id: self.user.id, project_id: self.id, level: "owner"])
     EventService.new(self, self, self.user, ENV["CREATE_PROJECT"], self.team).generate_event
   end

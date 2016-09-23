@@ -2,6 +2,9 @@ class CommentsController < ApplicationController
   before_action :authenticate_user!
   before_action :find_team_and_project_and_todo
   before_action :find_comment, :only => [:edit, :update, :destroy]
+  before_action do
+    check_permission(params[:project_id])
+  end
 
   def new
     @comment = Comment.new

@@ -3,6 +3,7 @@ class Todo < ApplicationRecord
   validates :title, length: { maximum: 1000 }
   has_one :assignment, :dependent => :destroy
   belongs_to :todoable, polymorphic: true
+  belongs_to :user
   has_many :comments
 
   include AASM
@@ -32,9 +33,6 @@ class Todo < ApplicationRecord
     event :reopen do
       transitions from: :finished, to: :todo_created
     end
-
-
-
   end
 
 end
@@ -51,6 +49,7 @@ end
 #  todoable_id   :integer
 #  todoable_type :string
 #  aasm_state    :string           default("todo_created")
+#  user_id       :integer
 #
 # Indexes
 #

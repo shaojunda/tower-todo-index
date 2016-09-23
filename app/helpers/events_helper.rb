@@ -8,13 +8,14 @@ module EventsHelper
 
   def render_event_content(event)
     if event.eventable.class == Todo
-      event.eventable.title
+      link_to event.eventable.title, team_project_todo_path(event.eventable.todoable.team, event.eventable.todoable, event.eventable)
     elsif event.eventable.class == Team
       event.eventable.name
     elsif event.eventable.class == Project
-      event.eventable.name
+      link_to event.eventable.name, team_project_path(event.eventable.team, event.eventable)
     elsif event.eventable.class == Comment
-      event.eventable.todo.name
+
+      link_to event.eventable.todo.title, team_project_todo_path(event.eventable.todo.todoable.team, event.eventable.todo.todoable, event.eventable)
     end
   end
 
@@ -102,11 +103,12 @@ module EventsHelper
   end
 
   def render_comment(event)
-    truncate(sanitize(event.eventable.content), length: 157)
+    project = event.eventable.todo.todoable
+    link_to truncate(sanitize(event.eventable.content), length: 157), team_project_todo_comment_path(project.team, project, event.eventable.todo, event.eventable)
   end
 
   def render_event_content_for_comment(event)
-    truncate(event.eventable.todo.title, length: 77)
+    link_to event.eventable.todo.title, team_project_todo_path(event.eventable.todo.todoable.team, event.eventable.todo.todoable, event.eventable.todo)
   end
 
   def render_event_owner(event_owner)

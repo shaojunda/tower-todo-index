@@ -18,6 +18,7 @@ class TodosController < ApplicationController
 
   def create
     @todo = @project.todos.build(todo_params)
+    @todo.user = current_user
     if @todo.save!
       assignment_params
     else
@@ -26,7 +27,7 @@ class TodosController < ApplicationController
   end
 
   def show
-    @comments = @todo.comments.paginate(page: params[:page], per_page: 10)
+    @comments = @todo.comments.includes(:user).paginate(page: params[:page], per_page: 10)
   end
 
   def edit
@@ -139,13 +140,21 @@ class TodosController < ApplicationController
 
     if @assignment.present?
       if @assignment.update(new_params)
+        if new_params[:new_executor_id].present?
+          EventService.new(@todo.todoable, @todo, @todo.user, ENV["ASSIGN_EXECUTOR_TODO"], @todo.todoable.team).generate_event
+        end
         flash[:notice] = "任务更新成功"
         redirect_to team_project_path(@team, @project)
       else
         render :edit
       end
     else
-      if @todo.create_assignment!(new_params)
+      if @todo.create_assignment(new_params)
+        if new_params[:origin_executor_id].present?
+          EventService.new(@todo.todoable, @todo, @todo.user, ENV["CREATE_TODO_WITH_EXECUTOR"], @todo.todoable.team).generate_event
+        else
+          EventService.new(@todo.todoable, @todo, @todo.user, ENV["CREATE_TODO"], @todo.todoable.team).generate_event
+        end
         redirect_to team_project_path(@team, @project)
       else
         flash[:notice] = "出现错误"
