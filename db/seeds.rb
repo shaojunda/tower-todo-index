@@ -14,7 +14,7 @@ puts "3 Users' accounts created."
 
 Team.create([name: "Tower 测试", user_id: 1, created_at: "2016-09-01"])
 
-Event.create([ownerable_id: 1, ownerable_type:"Team", creator_id: 1, action:"create_team", eventable_type: "Team", eventable_id: 1 , created_at: "2016-09-01"])
+# Event.create([ownerable_id: 1, ownerable_type:"Team", creator_id: 1, action:"create_team", eventable_type: "Team", eventable_id: 1 , created_at: "2016-09-01"])
 
 puts "1 Team created."
 
@@ -22,11 +22,11 @@ puts "1 Team created."
 
 Project.create([name: "tower-todo-index-1", team_id: 1, created_at: "2016-09-01 10:00:00"])
 
-Event.create([ownerable_id: 1, ownerable_type:"Project", creator_id: 1, action:"create_project", eventable_id: 1, eventable_type: "Project", created_at: "2016-09-01 10:00:00"])
+Event.create([ownerable_id: 1, ownerable_type:"Project", creator_id: 1, action:"create_project", eventable_id: 1, eventable_type: "Project", created_at: "2016-09-01 10:00:00", team_id: 1])
 
 Project.create([name: "tower-todo-index-2", team_id: 1, created_at: "2016-09-01 11:00:00"])
 
-Event.create([ownerable_id: 2, ownerable_type:"Project", creator_id: 1, action:"create_project", eventable_id: 2, eventable_type: "Project", created_at: "2016-09-01 11:00:00"])
+Event.create([ownerable_id: 2, ownerable_type:"Project", creator_id: 1, action:"create_project", eventable_id: 2, eventable_type: "Project", created_at: "2016-09-01 11:00:00", team_id: 1])
 
 puts "2 Project created."
 

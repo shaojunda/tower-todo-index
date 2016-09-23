@@ -2,10 +2,11 @@ class ProjectsController < ApplicationController
   before_action :authenticate_user!
   before_action only: [:show, :edit, :update, :destroy] do
     check_permission(params[:id])
+
   end
+  before_action :find_team_id
 
   def show
-    @team = Team.find(params[:team_id])
     @project = @team.projects.find(params[:id])
     @todos = @project.todos.includes([{:assignment => :origin_executor},{:assignment => :new_executor} , :assignment, :todoable]).paginate(page: params[:page], per_page: 50)
   end
@@ -15,14 +16,20 @@ class ProjectsController < ApplicationController
   end
 
   def create
-    @team = Team.find(params[:team_id])
     @project = @team.projects.build(project_params)
+    @project.user = current_user
     if @project.save
       flash[:notice] = "成功创建项目"
-      redirect_to team_project_index_path(@team)
+      redirect_to team_path(@team)
     else
       render :new
     end
+  end
+
+  protected
+
+  def find_team_id
+    @team = Team.find(params[:team_id])
   end
 
   private

@@ -3,8 +3,6 @@ class ApplicationController < ActionController::Base
   helper_method :current_days
   helper_method :current_owners
 
-
-
   def check_permission(projecct_id)
     unless current_user.has_permission_to_operate_todo?(projecct_id)
       flash[:alert] = "等等，你好像不是我们机组的"
