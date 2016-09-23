@@ -8,7 +8,7 @@ class ProjectsController < ApplicationController
 
   def show
     @project = @team.projects.find(params[:id])
-    @todos = @project.todos.includes([{:assignment => :origin_executor},{:assignment => :new_executor} , :assignment, :todoable]).paginate(page: params[:page], per_page: 50)
+    @todos = @project.todos.includes([{:assignment => :origin_executor},{:assignment => :new_executor} , :assignment, :todoable]).recent.paginate(page: params[:page], per_page: 50)
   end
 
   def new

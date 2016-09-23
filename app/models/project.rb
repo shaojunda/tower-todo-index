@@ -4,6 +4,9 @@ class Project < ApplicationRecord
   belongs_to :user
   has_many :todos, as: :todoable
 
+  scope :recent, -> {order("created_at DESC")}
+  
+
   after_commit :assign_permission_and_generate_event
 
   def assign_permission_and_generate_event
