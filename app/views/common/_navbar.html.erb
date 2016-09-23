@@ -16,6 +16,16 @@
 
         <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse navbar-ex1-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav navbar-left">
+                <%#= params.inspect %>
+                <li> <%= link_to("团队", "/") %> </li>
+                <% if params[:controller] == "projects" or params[:controller] == "events" or params[:id].present? %>
+                  <li> <%= link_to("项目", team_path(@team)) %> </li>
+                  <li><%= link_to("动态", team_events_path(@team)) %> </li>
+
+                <% end %>
+              </ul>
+
               <ul class="nav navbar-nav navbar-right">
                 <% if !current_user %>
                 <li><%= link_to("注册", new_user_registration_path) %>

@@ -1,12 +1,15 @@
-<%= render partial:"show_events", locals: { group_events: @group_events, days: @days } %>
-<div id="moreEventContainer">
-  <div id="loadbtn" class="text-center">
-    <%= link_to("正在加载更多...", "javascript:void(0);", class:"btn btn-default", id: "loadMore") %>
-  </div>
-</div>
+<div class="mainContainer">
 
-<input type="hidden" id="teamId" name="teamId" value="<%= @team.id %>">
-<input type="hidden" id="eventsSize" value="<%= @events_size %>">
+  <%= render partial:"show_events", locals: { group_events: @group_events, days: @days } %>
+  <div id="moreEventContainer">
+    <div id="loadbtn" class="text-center">
+      <%= link_to("正在加载更多...", "javascript:void(0);", class:"btn btn-default", id: "loadMore") %>
+    </div>
+  </div>
+
+  <input type="hidden" id="teamId" name="teamId" value="<%= @team.id %>">
+  <input type="hidden" id="eventsSize" value="<%= @events_size %>">
+</div>
 
 <% content_for :javascripts do %>
   <script>
