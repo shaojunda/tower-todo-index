@@ -7,7 +7,7 @@ class Todo < ApplicationRecord
   has_many :comments
 
   scope :recent, -> {order("created_at DESC")}
-  
+
 
   include AASM
 
@@ -35,6 +35,10 @@ class Todo < ApplicationRecord
 
     event :reopen do
       transitions from: :finished, to: :todo_created
+    end
+
+    event :recover do
+      transitions from: :deleted, to: :todo_created
     end
   end
 

@@ -9,6 +9,13 @@ class TodoStatesController < ApplicationController
     redirect_to team_project_path(@team, @project)
   end
 
+  def create
+    @todo.recover!
+    EventService.new(@project, @todo, @todo.user, ENV["RECOVER_TODO"], @team).generate_event
+    flash[:notice] = "已恢复这个任务"
+    redirect_to team_project_path(@team, @project)
+  end
+
   def edit
     @todo.pause!
     EventService.new(@project, @todo, @todo.user, ENV["PAUSE_PROCESS_TODO"], @team).generate_event

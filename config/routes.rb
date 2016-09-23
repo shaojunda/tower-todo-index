@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   resources :teams do
     resources :projects do
       resources :todos do
-        resources :todo_states, only: [ :new, :edit, :update, :destroy]
+        resources :todo_states, only: [ :new, :edit, :update, :destroy, :create]
         resources :comments
       end
     end
