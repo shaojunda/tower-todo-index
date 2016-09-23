@@ -1,7 +1,7 @@
 <% if current_user && current_user.has_permission_to_operate_todo?(get_project_id(todo)) %>
   <%= render_todo_operate(team, project, todo) %>
   <% unless todo.deleted? or todo.finished? %>
-    <%= link_to("完成", finish_todo_team_project_todo_path(team, project, todo), class: "btn btn-sm btn-default") %>
+    <%= link_to("完成", team_project_todo_todo_state_path(team, project, todo), method: :delete, class: "btn btn-sm btn-default") %>
   <% end %>
   <%= link_to("修改", edit_team_project_todo_path(team, project, todo), class: "btn btn-sm btn-default") %>
 <% end %>

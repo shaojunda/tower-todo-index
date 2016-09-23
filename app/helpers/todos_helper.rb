@@ -50,11 +50,11 @@ module TodosHelper
 
   def render_todo_operate(team, project, todo)
     if todo.todo_created?
-      link_to "开始", process_todo_team_project_todo_path(team, project, todo), class: "btn btn-sm btn-success"
+      link_to "开始", new_team_project_todo_todo_state_path(team, project, todo), class: "btn btn-sm btn-success"
     elsif todo.processing?
-      link_to "暂停", pause_todo_team_project_todo_path(team, project, todo), class: "btn btn-sm btn-warning"
+      link_to "暂停", edit_team_project_todo_todo_state_path(team, project, todo), class: "btn btn-sm btn-warning"
     elsif todo.finished?
-      link_to "重新打开", reopen_todo_team_project_todo_path(team, project, todo), class: "btn btn-sm btn-warning"
+      link_to "重新打开", team_project_todo_todo_state_path(team, project, todo), method: :put , class: "btn btn-sm btn-warning"
     end
   end
 
