@@ -6,6 +6,9 @@ class Todo < ApplicationRecord
   belongs_to :user
   has_many :comments
 
+  scope :recent, -> {order("created_at DESC")}
+  
+
   include AASM
 
   aasm do
