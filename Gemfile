@@ -48,7 +48,7 @@ group :development, :test do
   gem "rubocop"
   gem "pry"
   gem "pry-nav"
-  gem "bullet"
+  # gem "bullet"
 end
 
 group :development do
