@@ -44,6 +44,7 @@ class TodosController < ApplicationController
 
   def destroy
     @todo.delete!
+    EventService.new(@project, @todo, @todo.user, ENV["DELETE_TODO"], @team).generate_event
     flash[:alert] = "已删除这个任务"
     redirect_to team_project_path(@team, @project)
   end

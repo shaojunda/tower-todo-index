@@ -4,7 +4,7 @@ class Project < ApplicationRecord
   belongs_to :user
   has_many :todos, as: :todoable
 
-  after_save :assign_permission_and_generate_event
+  after_commit :assign_permission_and_generate_event
 
   def assign_permission_and_generate_event
     ProjectPermission.create([user_id: self.user.id, project_id: self.id, level: "owner"])

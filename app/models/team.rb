@@ -4,7 +4,7 @@ class Team < ApplicationRecord
   has_many :events
   belongs_to :user
 
-  after_save :assion_team_permission
+  after_commit :assion_team_permission
 
   def assion_team_permission
     TeamPermission.create([user_id: self.user.id, team_id: self.id, level: "owner"])

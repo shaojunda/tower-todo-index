@@ -6,6 +6,6 @@
   <% end %>
   <%= link_to("修改", edit_team_project_todo_path(team, project, todo), class: "btn btn-sm btn-default") %>
 <% end %>
-<% if current_user && current_user.is_owner?(get_project_id(todo)) %>
+<% if current_user && current_user.is_owner?(get_project_id(todo) && !todo.deleted?) %>
   <%= link_to("删除", team_project_todo_path(team, project, todo), class: "btn btn-sm btn-default", method: :delete, data: { confirm: "确定要删除这条任务吗？"}) %>
 <% end %>
