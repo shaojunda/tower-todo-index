@@ -49,29 +49,6 @@ class TodosController < ApplicationController
     redirect_to team_project_path(@team, @project)
   end
 
-  def process_todo
-    @todo.process!
-    flash[:notice] = "开始处理这个任务"
-    redirect_to team_project_path(@team, @project)
-  end
-
-  def pause_todo
-    @todo.pause!
-    flash[:notice] = "暂停处理这个任务"
-    redirect_to team_project_path(@team, @project)
-  end
-
-  def finish_todo
-    @todo.finish!
-    flash[:notice] = "已完成这个任务"
-    redirect_to team_project_path(@team, @project)
-  end
-
-  def reopen_todo
-    @todo.reopen!
-    flash[:notice] = "已重新打开这个任务"
-    redirect_to team_project_path(@team, @project)
-  end
 
   protected
 
