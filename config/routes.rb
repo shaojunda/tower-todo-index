@@ -9,16 +9,13 @@ Rails.application.routes.draw do
   resources :teams do
     resources :projects do
       resources :todos do
-        resources :todo_states,only: [ :new, :edit, :update, :destroy]
+        resources :todo_states, only: [ :new, :edit, :update, :destroy]
         resources :comments
       end
     end
 
-    resources :events do
-      collection do
-        get :get_more_event
-      end
-    end
+    resources :events
+    resources :more_events, only: :index
 
   end
 

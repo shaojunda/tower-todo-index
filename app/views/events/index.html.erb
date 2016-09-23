@@ -46,7 +46,7 @@
 
     function getMoreEvent(teamId) {
       $.ajax({
-        url: "/teams/" + teamId + "/events/get_more_event",
+        url: "/teams/" + teamId + "/more_events/",
         data: {current_page: page},
         method: "get",
         dataType: "json",
