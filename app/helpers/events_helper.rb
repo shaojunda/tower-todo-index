@@ -111,7 +111,7 @@ module EventsHelper
     link_to event.eventable.todo.title, team_project_todo_path(event.eventable.todo.todoable.team, event.eventable.todo.todoable, event.eventable.todo)
   end
 
-  def render_event_owner(event_owner)
+  def render_event_owner(event_owner, event)
     # owner = ""
     # if event.ownerable.class == Team
     #   owner = event.ownerable.name
@@ -119,7 +119,13 @@ module EventsHelper
     #   owner = event.ownerable.name
     # end
     # render partial: "events/day_event", locals: {day_event: day,  event_content: owner}
-    link_to event_owner, "#"
+    if event.eventable.class == Todo
+      link_to event_owner, team_project_path(event.eventable.todoable.team, event.eventable.todoable)
+    elsif event.eventable.class == Project
+      link_to event_owner, team_project_path(event.eventable.team, event.eventable)
+    elsif event.eventable.class == Comment
+      link_to event_owner, team_project_path(event.eventable.todo.todoable.team, event.eventable.todo.todoable)
+    end
   end
 
   def render_event_owner_day(day)
