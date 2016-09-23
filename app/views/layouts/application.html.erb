@@ -3,6 +3,7 @@
   <head>
     <title>TowerTodoIndex</title>
     <%= csrf_meta_tags %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   </head>
@@ -14,7 +15,6 @@
       <%= yield %>
       <%= render partial: "common/footer" %>
     </div>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= yield :javascripts %>
   </body>
 </html>
