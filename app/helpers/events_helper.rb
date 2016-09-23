@@ -32,7 +32,7 @@ module EventsHelper
     if event.eventable.assignment.new_executor.present?
       render partial: "events/event_content", locals: {action: "把 #{event.eventable.assignment.origin_executor.user_name} 的任务指派给 #{event.eventable.assignment.new_executor.user_name}", event_content: render_event_content(event) }
     else
-      render partial: "events/event_content", locals: {action: "给 #{event.eventable.assignment.origin_executor.user_nam} 指派了任务", event_content: render_event_content(event) }
+      render partial: "events/event_content", locals: {action: "给 #{event.eventable.assignment.origin_executor.user_name} 指派了任务", event_content: render_event_content(event) }
     end
   end
 
@@ -104,7 +104,7 @@ module EventsHelper
 
   def render_comment(event)
     project = event.eventable.todo.todoable
-    link_to truncate(sanitize(event.eventable.content), length: 157), team_project_todo_comment_path(project.team, project, event.eventable.todo, event.eventable)
+    link_to truncate(sanitize(event.eventable.content), length: 157), team_project_todo_path(project.team, project, event.eventable.todo)
   end
 
   def render_event_content_for_comment(event)

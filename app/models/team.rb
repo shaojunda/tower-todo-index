@@ -7,7 +7,7 @@ class Team < ApplicationRecord
   after_save :assion_team_permission
 
   def assion_team_permission
-    TeamPermission.create([user_id: current_user.id, team_id: self.id, level: "owner"])
+    TeamPermission.create([user_id: self.user.id, team_id: self.id, level: "owner"])
   end
 end
 

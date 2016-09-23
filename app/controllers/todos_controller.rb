@@ -35,7 +35,7 @@ class TodosController < ApplicationController
   end
 
   def update
-    if @todo.update(todo_params)
+    if @todo.update!(todo_params)
       assignment_params
     else
       render :edit
@@ -137,10 +137,10 @@ class TodosController < ApplicationController
       new_params[:new_deadline] = new_deadline
     end
     @assignment = @todo.assignment
-
+binding.pry
     if @assignment.present?
       if @assignment.update(new_params)
-        if new_params[:new_executor_id].present?
+        if new_params[:origin_executor_id].present? or new_params[:new_executor_id].present?
           EventService.new(@todo.todoable, @todo, @todo.user, ENV["ASSIGN_EXECUTOR_TODO"], @todo.todoable.team).generate_event
         end
         flash[:notice] = "任务更新成功"

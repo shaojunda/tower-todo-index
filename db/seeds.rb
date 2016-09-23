@@ -20,11 +20,11 @@ puts "1 Team created."
 
 
 
-Project.create([name: "tower-todo-index-1", team_id: 1, created_at: "2016-09-01 10:00:00"])
+Project.create([name: "tower-todo-index-1", team_id: 1, created_at: "2016-09-01 10:00:00", user_id: 1])
 
 Event.create([ownerable_id: 1, ownerable_type:"Project", creator_id: 1, action:"create_project", eventable_id: 1, eventable_type: "Project", created_at: "2016-09-01 10:00:00", team_id: 1])
 
-Project.create([name: "tower-todo-index-2", team_id: 1, created_at: "2016-09-01 11:00:00"])
+Project.create([name: "tower-todo-index-2", team_id: 1, created_at: "2016-09-01 11:00:00", user_id: 1])
 
 Event.create([ownerable_id: 2, ownerable_type:"Project", creator_id: 1, action:"create_project", eventable_id: 2, eventable_type: "Project", created_at: "2016-09-01 11:00:00", team_id: 1])
 
@@ -44,7 +44,8 @@ csv.each_with_index do |row, i|
     title: row[0],
     todoable_id: row[1],
     todoable_type: row[2],
-    created_at: row[3]
+    created_at: row[3],
+    user_id: row[4]
   )
 end
 
@@ -56,18 +57,10 @@ csv = CSV.parse(csv_text, :headers => false)
 csv.each_with_index do |row, i|
   next if i == 0
 
-  origin_deadline =
-    begin
-      Date.parse(row[3])
-    rescue
-      nil
-    end
   Assignment.create(
 
     todo_id: row[0],
-    origin_executor_id: row[1],
-    origin_deadline: row[2],
-    created_at: row[3]
+    created_at: row[1]
   )
 end
 
@@ -83,7 +76,8 @@ csv.each_with_index do |row, i|
 
     todo_id: row[0],
     content: row[1],
-    created_at: row[2]
+    created_at: row[2],
+    user_id: row[3]
 
   )
 end
