@@ -1,6 +1,6 @@
 class TeamsController < ApplicationController
   before_action :authenticate_user!
-  before_action :check_team_permission, :except => :index
+  before_action :check_team_permission, :except => [:index, :new, :create]
 
   def index
     team_permissions = current_user.team_permissions.select("team_id")
