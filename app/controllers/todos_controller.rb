@@ -115,7 +115,6 @@ class TodosController < ApplicationController
       new_params[:new_deadline] = new_deadline
     end
     @assignment = @todo.assignment
-binding.pry
     if @assignment.present?
       if @assignment.update(new_params)
         if new_params[:origin_executor_id].present? or new_params[:new_executor_id].present?
