@@ -1,0 +1,20 @@
+<tr>
+  <td>
+    #
+  </td>
+  <td>
+    <%= render_team_name(team) %>
+  </td>
+  <td>
+    <%= render_team_admin(team) %>
+  </td>
+  <td>
+    <%= render_created_at_for_team(team) %>
+  </td>
+  <td>
+    <%= link_to("进入团队", team_path(team), class: "btn btn-success") %>
+  </td>
+  <td>
+    <%= link_to("查看动态", team_events_path(team), class: "btn btn-success") %>
+  </td>
+</tr>

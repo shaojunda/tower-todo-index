@@ -1,0 +1,68 @@
+<div class="mainContainer">
+
+  <%= render partial:"show_events", locals: { group_events: @group_events, days: @days } %>
+  <div id="moreEventContainer">
+    <div id="loadbtn" class="text-center">
+      <%= link_to("正在加载更多...", "javascript:void(0);", class:"btn btn-default", id: "loadMore") %>
+    </div>
+  </div>
+
+  <input type="hidden" id="teamId" name="teamId" value="<%= @team.id %>">
+  <input type="hidden" id="eventsSize" value="<%= @events_size %>">
+</div>
+
+<% content_for :javascripts do %>
+  <script>
+    var page = 1;
+    var hasMore = true;
+    var loadPageComplete = true;
+    $(function() {
+      if (parseInt($("#eventsSize").val()) == 0) {
+        hasMore = false;
+        $("#loadMore").text("没有更多内容了");
+        moreEventContainerToggle();
+      }
+      scrollEventBottom();
+    });
+
+    function scrollEventBottom() {
+      $(window).scroll(function() {
+         if(Math.abs($(window).scrollTop() + $(window).height() - $(document).height()) <= 5) {
+           if (hasMore && loadPageComplete) {
+             page++;
+             var teamId = $("#teamId").val()
+             getMoreEvent(teamId);
+             loadPageComplete = false;
+             moreEventContainerToggle();
+           }
+         }
+      });
+    }
+
+    function moreEventContainerToggle() {
+      if ($("#loadMore").is(":visible")) {
+        $(this).hide();
+      } else {
+        $(this).show();
+      }
+    }
+
+    function getMoreEvent(teamId) {
+      $.ajax({
+        url: "/teams/" + teamId + "/more_events/",
+        data: {current_page: page},
+        method: "get",
+        dataType: "json",
+        success: function(data){
+          if (data.size < 10) {
+            hasMore = false
+            $("#loadMore").text("没有更多内容了");
+          }
+          $("#loadbtn").before(data.template);
+          moreEventContainerToggle();
+          loadPageComplete = true;
+        }
+      });
+    }
+  </script>
+<% end %>

@@ -13,3 +13,25 @@
  *= require_tree .
  *= require_self
  */
+ @import "bootstrap-sprockets";
+ @import "bootstrap";
+ @import 'bootstrap-datetimepicker';
+
+
+body {
+  background-color: #f0f4e7;
+}
+
+.navbar-default {
+  background-color: #f0f4e7;
+  border: 0;
+}
+
+.mainContainer {
+  padding-top: 15px;
+  background-color: #fff;
+  box-shadow: 2px 2px 5px rgba(black, .1);
+  border: 1px solid #d3d8cc;
+  padding-bottom: 15px;
+  margin-bottom: 25px;
+}

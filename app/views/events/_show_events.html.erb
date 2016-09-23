@@ -1,0 +1,38 @@
+<% group_events.each do |day, events| %>
+  <% if @current_page.to_i == 1 or (@current_page.to_i > 1 and current_days.exclude?(day.to_s))%>
+    <div class="row">
+      <div class="col-md-12 col-lg-12 text-center">
+        <div class="owner">
+          <%= render_event_owner_day(day) %>
+          <% current_days << day %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  <% events.group_by{|e| e.ownerable.name}.each do |event_owner, new_events| %>
+    <% if @current_page.to_i == 1 or current_days.exclude?(day.to_s) or (@current_page.to_i > 1 and current_owners.exclude?(event_owner.to_s))%>
+      <div class="row">
+        <div class="col-md-12 col-lg-12 text-center">
+          <div class="owner">
+            <%= render_event_owner(event_owner, new_events.first) %>
+            <% current_owners << event_owner %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    <% new_events.each do |event| %>
+      <div class="row">
+        <div class="col-md-2 col-md-offset-2 col-lg-2">
+          <span><%= render_created_at(event.created_at) %></span>
+          <div class="thumb">
+            <%= render_head_pic %>
+          </div>
+          <span><%= render_creator_name(event) %></span>
+        </div>
+        <div class="col-md-8 col-lg-8 eventContentContainer">
+          <%= render_event_action(event) %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>

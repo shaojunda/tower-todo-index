@@ -3,12 +3,18 @@
   <head>
     <title>TowerTodoIndex</title>
     <%= csrf_meta_tags %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-    <%= yield %>
+    <div class="container">
+      <%= render partial: "common/flashes" %>
+      <%= render partial: "common/navbar" %>
+      <%= yield %>
+      <%= render partial: "common/footer" %>
+    </div>
+    <%= yield :javascripts %>
   </body>
 </html>

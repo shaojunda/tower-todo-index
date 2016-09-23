@@ -1,24 +1,10 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+- rails dev:build 可以建立本地立即可测试的环境。
+- 使用时需要先登录，默认展示团队首页。
 
-Things you may want to cover:
+## 开发用帐号
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+ a: user1@gmail.com p: 111111
+ a: user2@gmail.com p: 111111
+ a: user3@gmail.com p: 111111

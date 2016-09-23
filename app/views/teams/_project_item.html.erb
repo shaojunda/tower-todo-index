@@ -1,0 +1,14 @@
+<tr>
+  <td>
+    #
+  </td>
+  <td>
+    <%= render_project_name(project) %>
+  </td>
+  <td>
+    <%= render_created_at_for_project(project) %>
+  </td>
+  <td>
+    <%= link_to("进入项目", team_project_path(project.team, project), class: "btn btn-success") %>
+  </td>
+</tr>

@@ -1,0 +1,14 @@
+<% if current_user && current_user.has_permission_to_operate_todo?(get_project_id(todo)) %>
+  <%= render_todo_operate(team, project, todo) %>
+  <% unless todo.deleted? or todo.finished? %>
+    <%= link_to("完成", team_project_todo_todo_state_path(team, project, todo), method: :delete, class: "btn btn-sm btn-default") %>
+    <%= link_to("添加评论", new_team_project_todo_comment_path(team, project, todo), class: "btn btn-sm btn-default") %>
+    <%= link_to("修改", edit_team_project_todo_path(team, project, todo), class: "btn btn-sm btn-default") %>
+  <% end %>
+  <% if todo.deleted? %>
+    <%= link_to("恢复", team_project_todo_todo_states_path(team, project, todo), method: :post ,class: "btn btn-sm btn-default") %>
+  <% end %>
+<% end %>
+<% if current_user && current_user.is_owner?(get_project_id(todo) && !todo.deleted?) %>
+  <%= link_to("删除", team_project_todo_path(team, project, todo), class: "btn btn-sm btn-default", method: :delete, data: { confirm: "确定要删除这条任务吗？"}) %>
+<% end %>

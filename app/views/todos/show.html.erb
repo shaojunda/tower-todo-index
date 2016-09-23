@@ -1,0 +1,28 @@
+<div class="text-center">
+  <h1><%= render_todo_title(@team, @project, @todo) %></h1>
+  <p>
+    <%= render_todo_description(@todo) %>
+  </p>
+</div>
+<div class="col-md-12">
+  <div class="group">
+    <%= link_to("添加新评论", new_team_project_todo_comment_path(@team, @project, @todo), class: "btn btn-primary pull-right") %>
+  </div>
+
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <td>#</td>
+        <td>评论内容</td>
+        <td>评论者</td>
+        <td>评论时间</td>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render :partial => "comments/comment_item", :collection => @comments, :as => :comment, locals: { team: @team, project: @project, todo: @todo }   %>
+    </tbody>
+  </table>
+</div>
+<div class="text-center">
+  <%= will_paginate @comments %>
+</div>

@@ -1,0 +1,23 @@
+<tr>
+  <td>
+    #
+  </td>
+  <td>
+    <%= render_todo_title(team, project, todo) %>
+  </td>
+  <td>
+    <%= render_todo_description(todo) %>
+  </td>
+  <td>
+    <%= render_todo_state(todo) %>
+  </td>
+  <td>
+    <%= render_todo_executor(todo) %>
+  </td>
+  <td>
+    <%= render_created_at_for_todo(todo) %>
+  </td>
+  <td>
+    <%= render partial:"todos/todo_operate", locals: { team: team, project: project, todo: todo } %>
+  </td>
+</tr>

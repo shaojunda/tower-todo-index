@@ -1,0 +1,10 @@
+<%= simple_form_for [@team, @project, @todo, @comment] do |f| %>
+  <div class="form-group">
+    <%= f.input :content, label: "评论内容", input_html: { class: "form-control" } %>
+  </div>
+  <% if ["new", "create"].include?(controller.action_name) %>
+    <%= f.submit "添加评论", class: "btn btn-primary", data: { disable_with: "添加中..." } %>
+  <% else %>
+    <%= f.submit "更新", class: "btn btn-primary", data: { disable_with: "更新中..." } %>
+  <% end %>
+<% end %>

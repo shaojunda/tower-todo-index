@@ -1,0 +1,45 @@
+// Place all the styles related to the events controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.eventContent, .thumb{
+  display: inline-block;
+}
+
+
+footer {
+  padding-top: 10px;
+  text-align: center;
+}
+
+.eventComment {
+  margin-left: 63px;
+}
+
+
+.eventContent {
+  a:link {color: #000};
+  a:visited {color: #434343};
+  a:hover {color: #4094A6; text-decoration: none;}	;
+  a:active {color: #fff};
+  margin: 15px 0 0 25px;
+}
+
+.owner {
+  margin-bottom: 20px;
+}
+
+
+.eventComment {
+  a:link {color: #434343};
+  a:visited {color: #434343};
+  a:hover {color: #4094A6; text-decoration: none;}	;
+  a:active {color: #434343};
+}
+
+.moreEventContainer {
+  display: none;
+}
+
+.eventContentContainer {
+  margin-left: -80px;
+}
