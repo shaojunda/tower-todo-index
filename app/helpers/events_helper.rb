@@ -99,7 +99,7 @@ module EventsHelper
   end
 
   def render_creator_name(event)
-    link_to event.creator.user_name, "#"
+    link_to event.id, "#"
   end
 
   def render_comment(event)
