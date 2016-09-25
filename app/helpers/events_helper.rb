@@ -1,6 +1,6 @@
 module EventsHelper
 
-  EVENT_ACTION = { create_team: "创建了团队", create_project: "创建了项目", create_todo: "创建了任务", create_todo_with_executor: "", assign_executor_todo: "", finish_todo: "完成了任务", assign_deadline_todo: "", reopen_todo: "重新打开了任务", start_process_todo: "开始处理这条任务", pause_process_todo: "暂停处理这条任务", delete_todo: "删除了任务", recover_todo: "恢复了任务", cancel_todo: "", reply_todo: "回复了任务" }
+  EVENT_ACTION = { create_team: "创建了团队", create_project: "创建了项目", create_todo: "创建了任务", create_todo_with_executor: "create_todo_with_executor", assign_executor_todo: "assign_executor_todo",assign_new_executor_todo: "assign_new_executor_todo", finish_todo: "完成了任务", assign_deadline_todo: "", reopen_todo: "重新打开了任务", start_process_todo: "开始处理这条任务", pause_process_todo: "暂停处理这条任务", delete_todo: "删除了任务", recover_todo: "恢复了任务", cancel_todo: "", reply_todo: "回复了任务" }
 
   def render_created_at(create_at)
     create_at.strftime("%H:%M")
@@ -29,10 +29,12 @@ module EventsHelper
   end
 
   def assign_executor_todo(event)
-    if event.eventable.assignment.new_executor.present?
-      render partial: "events/event_content", locals: {action: "把 #{event.eventable.assignment.origin_executor.user_name} 的任务指派给 #{event.eventable.assignment.new_executor.user_name}", event_content: render_event_content(event) }
-    else
+    if event.action == EVENT_ACTION.fetch(:create_todo_with_executor)
       render partial: "events/event_content", locals: {action: "给 #{event.eventable.assignment.origin_executor.user_name} 指派了任务", event_content: render_event_content(event) }
+    elsif event.action == EVENT_ACTION.fetch(:assign_executor_todo)
+      render partial: "events/event_content", locals: {action: "给 #{event.eventable.assignment.origin_executor.user_name} 指派了任务", event_content: render_event_content(event) }
+    elsif event.action == EVENT_ACTION.fetch(:assign_new_executor_todo)
+      render partial: "events/event_content", locals: {action: "把 #{event.eventable.assignment.origin_executor.user_name} 的任务指派给 #{event.eventable.assignment.new_executor.user_name}", event_content: render_event_content(event) }
     end
   end
 
@@ -76,6 +78,8 @@ module EventsHelper
     when "create_todo_with_executor"
       create_todo_with_executor(event)
     when "assign_executor_todo"
+      assign_executor_todo(event)
+    when "assign_new_executor_todo"
       assign_executor_todo(event)
     when "finish_todo"
       render partial: "events/event_content", locals: {action: EVENT_ACTION.fetch(:finish_todo), event_content: render_event_content(event) }

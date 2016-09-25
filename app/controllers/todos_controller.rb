@@ -20,7 +20,8 @@ class TodosController < ApplicationController
     @todo = @project.todos.build(todo_params)
     @todo.user = current_user
     if @todo.save!
-      assignment_params
+      # assignment_params
+      new_assignment_params(0)
     else
       render :new
     end
@@ -36,7 +37,8 @@ class TodosController < ApplicationController
 
   def update
     if @todo.update!(todo_params)
-      assignment_params
+      # assignment_params
+      new_assignment_params(1)
     else
       render :edit
     end
@@ -75,50 +77,63 @@ class TodosController < ApplicationController
     @project = @team.projects.find(params[:project_id])
   end
 
-  def assignment_params
+  def create_assignment(assignment)
     new_params = {}
-    assignment = params[:todo][:assignment]
-    origin_executor_email = assignment[:origin_executor_email]
-    new_executor_email = assignment[:new_executor_email]
-    origin_deadline = assignment[:origin_deadline]
-    new_deadline = assignment[:new_deadline]
-    if origin_executor_email.present?
-      @origin_executor = User.find_by_email(origin_executor_email)
-      if !@origin_executor.present?
-        @assignment = Assignment.new
+    if assignment[:origin_executor_email].present?
+      origin_executor = User.find_by_email(assignment[:origin_executor_email])
+      if !origin_executor.present?
+        assignment = Assignment.new
         flash[:alert] = "无此用户"
         redirect_back(fallback_location: root_path)
         return
       end
-      new_params[:origin_executor_id] = @origin_executor.id
-    else
-      new_params[:origin_executor_id] = nil
+      new_params[:origin_executor] = origin_executor
     end
-    if new_executor_email.present?
-      @new_executor = User.find_by_email(new_executor_email)
-      if !@new_executor.present?
-        @assignment = Assignment.new
-        flash[:alert] = "无此用户"
+    if assignment[:origin_deadline].present?
+      new_params[:origin_deadline] = assignment[:origin_deadline]
+    end
+    if new_params.size > 0
+      if @todo.create_assignment(new_params)
+        if new_params[:origin_executor].present?
+          EventService.new(@todo.todoable, @todo, current_user, ENV["CREATE_TODO_WITH_EXECUTOR"], @todo.todoable.team).generate_event
+        end
+      else
+        flash[:notice] = "出现错误"
         redirect_back(fallback_location: root_path)
-        return
       end
-      new_params[:new_executor_id] = @new_executor.id
-    else
-      new_params[:new_executor_id] = nil
     end
+  end
 
-    if origin_deadline.present?
-      new_params[:origin_deadline] = origin_deadline
-    end
-
-    if new_deadline.present?
-      new_params[:new_deadline] = new_deadline
-    end
-    @assignment = @todo.assignment
-    if @assignment.present?
-      if @assignment.update(new_params)
-        if new_params[:origin_executor_id].present? or new_params[:new_executor_id].present?
-          EventService.new(@todo.todoable, @todo, @todo.user, ENV["ASSIGN_EXECUTOR_TODO"], @todo.todoable.team).generate_event
+  def update_assignment(old_assignment, new_assignment)
+    new_params = {}
+  # TODO: 当存在旧的 new_assignment 时，当去掉 new_executor 时 要执行取消操作。当去掉 origin_executor 时不进行任何操作
+    if old_assignment.origin_executor.present?
+      new_params[:origin_executor] = old_assignment.origin_executor
+      if new_assignment[:new_executor_email].present?
+        new_executor = User.find_by_email(new_assignment[:new_executor_email])
+        if !new_executor.present?
+          assignment = Assignment.new
+          flash[:alert] = "无此用户"
+          redirect_back(fallback_location: root_path)
+          return
+        end
+        new_params[:new_executor] = new_executor
+      end
+      if new_assignment[:origin_deadline].present?
+        new_params[:origin_deadline] = new_assignment[:origin_deadline]
+      end
+      if new_assignment[:new_deadline].present?
+        new_params[:new_deadline] = new_assignment[:new_deadline]
+      end
+      binding.pry
+      old_new_executor = old_assignment.new_executor
+      if old_assignment.update(new_params)
+        if new_assignment[:origin_executor_email].blank? && new_params[:new_executor].blank?
+          EventService.new(@todo.todoable, @todo, current_user, ENV["CANCEL_TODO"], @todo.todoable.team).generate_event
+        else
+          if new_executor.present? && new_executor != old_new_executor
+            EventService.new(@todo.todoable, @todo, current_user, ENV["ASSIGN_NEW_EXECUTOR_TODO"], @todo.todoable.team).generate_event
+          end
         end
         flash[:notice] = "任务更新成功"
         redirect_to team_project_path(@team, @project)
@@ -126,19 +141,51 @@ class TodosController < ApplicationController
         render :edit
       end
     else
-      if @todo.create_assignment(new_params)
-        if new_params[:origin_executor_id].present?
-          EventService.new(@todo.todoable, @todo, @todo.user, ENV["CREATE_TODO_WITH_EXECUTOR"], @todo.todoable.team).generate_event
-        else
-          EventService.new(@todo.todoable, @todo, @todo.user, ENV["CREATE_TODO"], @todo.todoable.team).generate_event
+      if new_assignment[:origin_executor_email].present?
+        origin_executor = User.find_by_email(new_assignment[:origin_executor_email])
+        if !origin_executor.present?
+          assignment = Assignment.new
+          flash[:alert] = "无此用户"
+          redirect_back(fallback_location: root_path)
+          return
         end
+        new_params[:origin_executor] = origin_executor
+      end
+
+      if new_assignment[:origin_deadline].present?
+        new_params[:origin_deadline] = new_assignment[:origin_deadline]
+      end
+      if new_assignment[:new_deadline].present?
+        new_params[:new_deadline] = new_assignment[:new_deadline]
+      end
+      if old_assignment.update(new_params)
+        if origin_executor.present?
+          EventService.new(@todo.todoable, @todo, current_user, ENV["ASSIGN_EXECUTOR_TODO"], @todo.todoable.team).generate_event
+        end
+        flash[:notice] = "任务更新成功"
         redirect_to team_project_path(@team, @project)
       else
-        flash[:notice] = "出现错误"
-        redirect_back(fallback_location: root_path)
+        render :edit
       end
     end
+
   end
+
+  def new_assignment_params(type)
+    # 获得 assignment_params
+    assignment = params[:todo][:assignment]
+
+    # create
+    if type == 0
+      create_assignment(assignment)
+
+    # update
+    elsif type == 1
+      old_assignment = @todo.assignment
+      update_assignment(old_assignment, assignment)
+    end
+  end
+
 
   private
 
