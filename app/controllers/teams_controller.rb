@@ -5,6 +5,7 @@ class TeamsController < ApplicationController
   def index
     team_permissions = current_user.team_permissions.select("team_id")
     @teams = Team.includes(:user).where( id: team_permissions ).paginate(page: params[:page], per_page: 50)
+    Publisher.notify("visite", user: current_user)
   end
 
   def show
